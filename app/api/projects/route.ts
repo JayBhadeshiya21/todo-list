@@ -43,7 +43,6 @@ export async function POST(request: Request) {
         if (!ProjectName || !CreatedBy) {
             return NextResponse.json(
                 { error: 'ProjectName and CreatedBy are required' },
-                { status: 400 }
             );
         }
 
