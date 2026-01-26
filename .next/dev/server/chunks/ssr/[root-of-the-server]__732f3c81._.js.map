@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///D:/Todo-list/todo-list/app/admin/dashboard/page.tsx"],"sourcesContent":["export default function AdminDashboard() {\r\n  return (\r\n    <>\r\n      <h1>Admin Dashboard</h1>\r\n\r\n      <ul>\r\n        <li><a href=\"/admin/users\">Users</a></li>\r\n        <li><a href=\"/admin/projects\">Projects</a></li>\r\n        <li><a href=\"/admin/tasklists\">Task Lists</a></li>\r\n        <li><a href=\"/admin/tasks\">Tasks</a></li>\r\n        <li><a href=\"/admin/comments\">Task Comments</a></li>\r\n      </ul>\r\n    </>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE;;0BACE,8OAAC;0BAAG;;;;;;0BAEJ,8OAAC;;kCACC,8OAAC;kCAAG,cAAA,8OAAC;4BAAE,MAAK;sCAAe;;;;;;;;;;;kCAC3B,8OAAC;kCAAG,cAAA,8OAAC;4BAAE,MAAK;sCAAkB;;;;;;;;;;;kCAC9B,8OAAC;kCAAG,cAAA,8OAAC;4BAAE,MAAK;sCAAmB;;;;;;;;;;;kCAC/B,8OAAC;kCAAG,cAAA,8OAAC;4BAAE,MAAK;sCAAe;;;;;;;;;;;kCAC3B,8OAAC;kCAAG,cAAA,8OAAC;4BAAE,MAAK;sCAAkB;;;;;;;;;;;;;;;;;;;AAItC"}}]
+}

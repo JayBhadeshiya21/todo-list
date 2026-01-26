@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Todo-list/todo-list/app/%28auth%29/layout.tsx"],"sourcesContent":["export default function AuthLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode;\r\n}) {\r\n  return (\r\n    <div className=\"flex min-h-screen items-center justify-center bg-zinc-50 p-4 dark:bg-black\">\r\n      <div className=\"w-full max-w-md\">\r\n        {children}\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAe,SAAS,WAAW,EACjC,QAAQ,EAGT;IACC,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;sBACZ;;;;;;;;;;;AAIT"}}]
+}

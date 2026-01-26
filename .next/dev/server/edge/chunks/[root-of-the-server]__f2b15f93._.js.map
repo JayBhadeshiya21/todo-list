@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/middleware.ts"],"sourcesContent":["import { NextRequest, NextResponse } from 'next/server';\r\n\r\nexport function middleware(req: NextRequest) {\r\n  const admin = req.cookies.get('adminId');\r\n\r\n  if (!admin) {\r\n    return NextResponse.redirect(new URL('/login', req.url));\r\n  }\r\n\r\n  return NextResponse.next();\r\n}\r\n\r\nexport const config = {\r\n  matcher: ['/admin/:path*'],\r\n};\r\n"],"names":[],"mappings":";;;;;;AAAA;AAAA;;AAEO,SAAS,WAAW,GAAgB;IACzC,MAAM,QAAQ,IAAI,OAAO,CAAC,GAAG,CAAC;IAE9B,IAAI,CAAC,OAAO;QACV,OAAO,gMAAY,CAAC,QAAQ,CAAC,IAAI,IAAI,UAAU,IAAI,GAAG;IACxD;IAEA,OAAO,gMAAY,CAAC,IAAI;AAC1B;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;KAAgB;AAC5B"}}]
+}

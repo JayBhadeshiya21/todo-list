@@ -1,0 +1,24 @@
+[00:00:42.623] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:52.454] Server  LOG     ✓ Ready in 36.5s
+[00:00:55.525] Server  LOG     ○ Compiling / ...
+[00:01:11.700] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:22.765] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:01:22.779] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:01:35.816] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:01:35.817] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:01:37.821] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:31.366] Server  LOG     prisma:query "SELECT 1"
+[00:02:31.366] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:02:31.367] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:03:48.458] Server  LOG     prisma:query "SELECT 1"
+[00:03:48.459] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:03:48.460] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:05:30.409] Server  ERROR   Error: You cannot use different slug names for the same dynamic path ('id' !== 'projectId').
+[00:05:30.441] Server  ERROR   ⨯ "unhandledRejection:" Error: You cannot use different slug names for the same dynamic path ('id' !== 'projectId').
+[00:05:30.469] Server  ERROR   ⨯ "unhandledRejection: " Error: You cannot use different slug names for the same dynamic path ('id' !== 'projectId').
+[00:05:30.782] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:33.159] Server  LOG     prisma:query "SELECT 1"
+[00:05:33.162] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:05:33.163] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:05:37.463] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:39.161] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
