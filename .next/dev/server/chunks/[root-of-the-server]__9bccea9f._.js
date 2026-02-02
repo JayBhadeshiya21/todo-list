@@ -75,18 +75,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
 ;
 async function GET(request, { params }) {
     try {
-        const { id } = await params;
-        const userId = parseInt(id);
-        if (isNaN(userId)) {
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
-            }, {
-                status: 400
-            });
-        }
+        const id = parseInt(params.id);
         const user = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.findUnique({
             where: {
-                UserID: userId
+                UserID: id
             }
         });
         if (!user) {
@@ -99,7 +91,6 @@ async function GET(request, { params }) {
         const { PasswordHash, ...safeUser } = user;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(safeUser);
     } catch (error) {
-        console.error('Error fetching user:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to fetch user'
         }, {
@@ -109,31 +100,48 @@ async function GET(request, { params }) {
 }
 async function PUT(request, { params }) {
     try {
-        const { id } = await params;
-        const userId = parseInt(id);
+        const id = parseInt(params.id);
         const body = await request.json();
-        if (isNaN(userId)) {
+        const { UserName, Email, RoleID } = body;
+        // Verify user exists first
+        const userExists = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.findUnique({
+            where: {
+                UserID: id
+            }
+        });
+        if (!userExists) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
+                error: 'User not found'
             }, {
-                status: 400
+                status: 404
             });
         }
-        const { UserName, Email, PasswordHash } = body;
         const updatedUser = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.update({
             where: {
-                UserID: userId
+                UserID: id
             },
             data: {
                 UserName,
-                Email,
-                PasswordHash
+                Email
             }
         });
-        const { PasswordHash: _, ...safeUser } = updatedUser;
+        // Update role if provided (Simplified: clear old roles, add new one)
+        if (RoleID) {
+            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].userroles.deleteMany({
+                where: {
+                    UserID: id
+                }
+            });
+            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].userroles.create({
+                data: {
+                    UserID: id,
+                    RoleID: parseInt(RoleID)
+                }
+            });
+        }
+        const { PasswordHash, ...safeUser } = updatedUser;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(safeUser);
     } catch (error) {
-        console.error('Error updating user:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to update user'
         }, {
@@ -143,25 +151,16 @@ async function PUT(request, { params }) {
 }
 async function DELETE(request, { params }) {
     try {
-        const { id } = await params;
-        const userId = parseInt(id);
-        if (isNaN(userId)) {
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
-            }, {
-                status: 400
-            });
-        }
+        const id = parseInt(params.id);
         await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.delete({
             where: {
-                UserID: userId
+                UserID: id
             }
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: 'User deleted successfully'
         });
     } catch (error) {
-        console.error('Error deleting user:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to delete user'
         }, {

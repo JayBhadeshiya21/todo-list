@@ -74,15 +74,33 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
 async function GET() {
     try {
         const users = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.findMany({
+            select: {
+                UserID: true,
+                UserName: true,
+                Email: true,
+                CreatedAt: true,
+                userroles: {
+                    select: {
+                        roles: {
+                            select: {
+                                RoleName: true
+                            }
+                        }
+                    }
+                }
+            },
             orderBy: {
                 CreatedAt: 'desc'
             }
         });
-        // Remove passwords from response
-        const safeUsers = users.map((user)=>{
-            const { PasswordHash, ...rest } = user;
-            return rest;
-        });
+        // Clean & flatten roles
+        const safeUsers = users.map((user)=>({
+                UserID: user.UserID,
+                UserName: user.UserName,
+                Email: user.Email,
+                CreatedAt: user.CreatedAt,
+                Roles: user.userroles.map((ur)=>ur.roles.RoleName)
+            }));
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(safeUsers);
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -97,7 +115,6 @@ async function POST(request) {
     try {
         const body = await request.json();
         const { UserName, Email, PasswordHash } = body;
-        // Basic validation
         if (!UserName || !Email || !PasswordHash) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: 'Missing required fields'
@@ -105,15 +122,14 @@ async function POST(request) {
                 status: 400
             });
         }
-        // Check availability
         const existingUser = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].users.findFirst({
             where: {
                 OR: [
                     {
-                        Email: Email
+                        Email
                     },
                     {
-                        UserName: UserName
+                        UserName
                     }
                 ]
             }
@@ -132,6 +148,7 @@ async function POST(request) {
                 PasswordHash
             }
         });
+        // Never return password
         const { PasswordHash: _, ...safeUser } = newUser;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(safeUser, {
             status: 201

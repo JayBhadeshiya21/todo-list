@@ -3,18 +3,12 @@ import { prisma } from '@/lib/db';
 
 export async function GET(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const roleId = parseInt(id);
-
-        if (isNaN(roleId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
+        const id = parseInt(params.id);
         const role = await prisma.roles.findUnique({
-            where: { RoleID: roleId },
+            where: { RoleID: id },
         });
 
         if (!role) {
@@ -23,66 +17,42 @@ export async function GET(
 
         return NextResponse.json(role);
     } catch (error) {
-        console.error('Error fetching role:', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch role' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to fetch role' }, { status: 500 });
     }
 }
 
 export async function PUT(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const roleId = parseInt(id);
+        const id = parseInt(params.id);
         const body = await request.json();
-
-        if (isNaN(roleId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
         const { RoleName } = body;
 
         const updatedRole = await prisma.roles.update({
-            where: { RoleID: roleId },
+            where: { RoleID: id },
             data: { RoleName },
         });
 
         return NextResponse.json(updatedRole);
     } catch (error) {
-        console.error('Error updating role:', error);
-        return NextResponse.json(
-            { error: 'Failed to update role' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to update role' }, { status: 500 });
     }
 }
 
 export async function DELETE(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const roleId = parseInt(id);
-
-        if (isNaN(roleId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
+        const id = parseInt(params.id);
         await prisma.roles.delete({
-            where: { RoleID: roleId },
+            where: { RoleID: id },
         });
 
         return NextResponse.json({ message: 'Role deleted successfully' });
     } catch (error) {
-        console.error('Error deleting role:', error);
-        return NextResponse.json(
-            { error: 'Failed to delete role' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to delete role' }, { status: 500 });
     }
 }

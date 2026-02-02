@@ -3,28 +3,16 @@ import { prisma } from '@/lib/db';
 
 export async function GET(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const taskId = parseInt(id);
-
-        if (isNaN(taskId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
+        const id = parseInt(params.id);
         const task = await prisma.tasks.findUnique({
-            where: { TaskID: taskId },
+            where: { TaskID: id },
             include: {
-                tasklists: true,
-                users: {
-                    select: {
-                        UserID: true,
-                        UserName: true,
-                        Email: true
-                    }
-                }
-            },
+                users: { select: { UserName: true } },
+                tasklists: { select: { ListName: true } }
+            }
         });
 
         if (!task) {
@@ -33,74 +21,49 @@ export async function GET(
 
         return NextResponse.json(task);
     } catch (error) {
-        console.error('Error fetching task:', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch task' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to fetch task' }, { status: 500 });
     }
 }
 
 export async function PUT(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const taskId = parseInt(id);
+        const id = parseInt(params.id);
         const body = await request.json();
-
-        if (isNaN(taskId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
-        const { ListID, AssignedTo, Title, Description, Priority, Status, DueDate } = body;
+        const { Title, Description, Status, Priority, AssignedTo, DueDate } = body;
 
         const updatedTask = await prisma.tasks.update({
-            where: { TaskID: taskId },
+            where: { TaskID: id },
             data: {
-                ListID: ListID ? parseInt(ListID) : undefined,
-                AssignedTo: AssignedTo ? parseInt(AssignedTo) : undefined,
                 Title,
                 Description,
-                Priority,
                 Status,
-                DueDate: DueDate ? new Date(DueDate) : undefined,
+                Priority,
+                AssignedTo: AssignedTo ? parseInt(AssignedTo) : null,
+                DueDate: DueDate ? new Date(DueDate) : null
             },
         });
 
         return NextResponse.json(updatedTask);
     } catch (error) {
-        console.error('Error updating task:', error);
-        return NextResponse.json(
-            { error: 'Failed to update task' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to update task' }, { status: 500 });
     }
 }
 
 export async function DELETE(
     request: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: { id: string } }
 ) {
     try {
-        const { id } = await params;
-        const taskId = parseInt(id);
-
-        if (isNaN(taskId)) {
-            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-        }
-
+        const id = parseInt(params.id);
         await prisma.tasks.delete({
-            where: { TaskID: taskId },
+            where: { TaskID: id },
         });
 
         return NextResponse.json({ message: 'Task deleted successfully' });
     } catch (error) {
-        console.error('Error deleting task:', error);
-        return NextResponse.json(
-            { error: 'Failed to delete task' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to delete task' }, { status: 500 });
     }
 }

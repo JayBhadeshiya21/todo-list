@@ -4,15 +4,35 @@ import { prisma } from '@/lib/db';
 export async function GET() {
     try {
         const users = await prisma.users.findMany({
-            orderBy: {
-                CreatedAt: 'desc',
+            select: {
+                UserID: true,
+                UserName: true,
+                Email: true,
+                CreatedAt: true,
+                userroles: {
+                    select: {
+                        roles: {
+                            select: {
+                                RoleName: true
+                            }
+                        }
+                    }
+                }
             },
+            orderBy: { CreatedAt: 'desc' }
         });
-        // Remove passwords from response
-        const safeUsers = users.map((user) => {
-            const { PasswordHash, ...rest } = user;
-            return rest;
-        });
+
+        // Clean & flatten roles
+        const safeUsers = users.map(user => ({
+            UserID: user.UserID,
+            UserName: user.UserName,
+            Email: user.Email,
+            CreatedAt: user.CreatedAt,
+            Roles: user.userroles.map(
+                ur => ur.roles.RoleName
+            )
+        }));
+
         return NextResponse.json(safeUsers);
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -28,7 +48,6 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { UserName, Email, PasswordHash } = body;
 
-        // Basic validation
         if (!UserName || !Email || !PasswordHash) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
@@ -36,28 +55,31 @@ export async function POST(request: Request) {
             );
         }
 
-        // Check availability
         const existingUser = await prisma.users.findFirst({
             where: {
                 OR: [
-                    { Email: Email },
-                    { UserName: UserName }
+                    { Email },
+                    { UserName }
                 ]
             }
-        })
+        });
 
         if (existingUser) {
-            return NextResponse.json({ error: 'User with this email or username already exists' }, { status: 409 })
+            return NextResponse.json(
+                { error: 'User with this email or username already exists' },
+                { status: 409 }
+            );
         }
 
         const newUser = await prisma.users.create({
             data: {
                 UserName,
                 Email,
-                PasswordHash, // In a real app we'd hash this here or expect it hashed. The user field is PasswordHash so we assume value is intended to be stored as is for now or hashed before sending.
+                PasswordHash, // hash in real apps
             },
         });
 
+        // Never return password
         const { PasswordHash: _, ...safeUser } = newUser;
 
         return NextResponse.json(safeUser, { status: 201 });
