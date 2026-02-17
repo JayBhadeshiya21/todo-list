@@ -71,34 +71,41 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/db.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/headers.js [app-route] (ecmascript)");
 ;
 ;
-async function GET(request) {
-    const { searchParams } = new URL(request.url);
-    const projectId = searchParams.get('projectId');
-    if (!projectId) {
+;
+async function checkAdmin() {
+    const cookieStore = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["cookies"])();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
+async function GET(request, context) {
+    if (!await checkAdmin()) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'projectId is required'
+            error: 'Unauthorized'
         }, {
-            status: 400
+            status: 401
         });
     }
     try {
+        const { id } = await context.params; // ✅ MUST await
+        const projectId = parseInt(id);
+        if (isNaN(projectId)) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Invalid ID'
+            }, {
+                status: 400
+            });
+        }
         const project = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].projects.findUnique({
             where: {
-                ProjectID: parseInt(projectId)
+                ProjectID: projectId
             },
             include: {
                 users: {
                     select: {
-                        UserID: true,
-                        UserName: true,
-                        Email: true
-                    }
-                },
-                tasklists: {
-                    include: {
-                        tasks: true
+                        UserName: true
                     }
                 }
             }
@@ -112,7 +119,7 @@ async function GET(request) {
         }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(project);
     } catch (error) {
-        console.error('Error fetching project:', error);
+        console.error(error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to fetch project'
         }, {
@@ -120,22 +127,29 @@ async function GET(request) {
         });
     }
 }
-async function PUT(request) {
-    const { searchParams } = new URL(request.url);
-    const projectId = searchParams.get('projectId');
-    if (!projectId) {
+async function PUT(request, context) {
+    if (!await checkAdmin()) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'projectId is required'
+            error: 'Unauthorized'
         }, {
-            status: 400
+            status: 401
         });
     }
     try {
+        const { id } = await context.params; // ✅ MUST await
+        const projectId = parseInt(id);
+        if (isNaN(projectId)) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Invalid ID'
+            }, {
+                status: 400
+            });
+        }
         const body = await request.json();
         const { ProjectName, Description } = body;
         const updatedProject = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].projects.update({
             where: {
-                ProjectID: parseInt(projectId)
+                ProjectID: projectId
             },
             data: {
                 ProjectName,
@@ -144,7 +158,7 @@ async function PUT(request) {
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(updatedProject);
     } catch (error) {
-        console.error('Error updating project:', error);
+        console.error(error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to update project'
         }, {
@@ -152,29 +166,34 @@ async function PUT(request) {
         });
     }
 }
-async function DELETE(request) {
-    const { searchParams } = new URL(request.url);
-    const projectId = searchParams.get('projectId');
-    if (!projectId) {
+async function DELETE(request, context) {
+    if (!await checkAdmin()) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'projectId is required'
+            error: 'Unauthorized'
         }, {
-            status: 400
+            status: 401
         });
     }
     try {
+        const { id } = await context.params; // ✅ MUST await
+        const projectId = parseInt(id);
+        if (isNaN(projectId)) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Invalid ID'
+            }, {
+                status: 400
+            });
+        }
         await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].projects.delete({
             where: {
-                ProjectID: parseInt(projectId)
+                ProjectID: projectId
             }
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: 'Project deleted successfully'
-        }, {
-            status: 200
         });
     } catch (error) {
-        console.error('Error deleting project:', error);
+        console.error(error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to delete project'
         }, {

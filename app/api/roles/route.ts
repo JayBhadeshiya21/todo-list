@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { cookies } from 'next/headers';
+
+async function checkAdmin() {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
 
 export async function GET() {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const roles = await prisma.roles.findMany();
         return NextResponse.json(roles);
@@ -15,6 +26,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
         const { RoleName } = body;

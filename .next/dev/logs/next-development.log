@@ -1,61 +1,570 @@
-[00:01:00.208] Server  LOG     ○ Compiling middleware ...
-[00:01:01.866] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:01:08.788] Server  LOG     ✓ Ready in 50.1s
-[00:01:11.888] Server  LOG     ○ Compiling / ...
-[00:01:25.856] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:38.169] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE (`todolist`.`users`.`Email` = ? AND `todolist`.`users`.`PasswordHash` = ?) LIMIT ? OFFSET ?"
-[00:01:38.195] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`UserID`, `todolist`.`userroles`.`RoleID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?)"
-[00:01:38.221] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?)"
-[00:01:38.231] Server  LOG     USER: {}
-[00:01:41.975] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:01:41.977] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:01:41.978] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:01:42.009] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:01:42.011] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:01:42.012] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:01:43.653] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
-[00:01:43.654] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
-[00:01:43.690] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
-[00:01:43.695] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
-[00:01:45.196] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
-[00:01:45.199] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
-[00:01:45.279] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
-[00:01:45.284] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
-[00:01:46.800] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
-[00:01:46.802] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
-[00:01:46.806] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
-[00:01:46.894] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
-[00:01:46.900] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
-[00:01:46.902] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
-[00:01:48.247] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
-[00:01:48.320] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
-[00:01:50.647] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:01:50.648] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:01:50.649] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:01:50.696] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:01:50.698] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:01:50.700] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:07:08.118] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:07:08.127] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:07:08.129] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:07:08.230] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:07:08.234] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:07:08.239] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:08:37.577] Server  LOG     ✓ Compiled in 409ms
-[00:08:41.789] Server  LOG     ✓ Compiled in 956ms
-[00:10:11.572] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:10:22.293] Server  LOG     prisma:query "SELECT 1"
-[00:10:22.430] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE (`todolist`.`users`.`Email` = ? AND `todolist`.`users`.`PasswordHash` = ?) LIMIT ? OFFSET ?"
-[00:10:22.832] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`UserID`, `todolist`.`userroles`.`RoleID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?)"
-[00:10:23.089] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?)"
-[00:10:23.290] Server  LOG     USER: {}
-[00:10:28.477] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:10:28.480] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:10:28.495] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:10:28.579] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
-[00:10:28.590] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?)"
-[00:10:28.593] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
-[00:10:35.710] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
-[00:10:35.711] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
-[00:10:35.763] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
-[00:10:35.775] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:03.436] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:04.051] Server  LOG     ✓ Ready in 3s
+[00:00:06.066] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:12.696] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:24.459] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE (`todolist`.`users`.`Email` = ? AND `todolist`.`users`.`PasswordHash` = ?) LIMIT ? OFFSET ?"
+[00:00:24.461] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`UserID`, `todolist`.`userroles`.`RoleID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?)"
+[00:00:24.462] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?)"
+[00:00:24.470] Server  LOG     USER: {}
+[00:00:26.732] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:00:26.761] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:00:27.211] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:27.214] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:27.216] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:27.273] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:27.275] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:27.277] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:31.452] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:31.453] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:31.454] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:31.455] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:00:31.456] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:31.535] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:31.536] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:31.537] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:31.544] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:00:31.545] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:44.032] Server  WARN    Error: Route "/api/projects/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:48.762] Server  LOG     prisma:query "SELECT 1"
+[00:00:48.762] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:00:48.763] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:48.779] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:00:48.780] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:00:48.822] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:00:48.823] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:48.853] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:00:48.854] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:00:57.068] Server  WARN    Error: Route "/api/tasklists/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:59.695] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:00:59.696] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:00:59.698] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:59.698] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:59.699] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:59.701] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:00:59.702] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:00:59.703] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:00:59.841] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:00:59.842] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:00:59.851] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:00:59.852] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:00:59.854] Server  LOG     prisma:query "SELECT 1"
+[00:00:59.855] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?,?)"
+[00:00:59.857] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:00:59.858] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:00:59.859] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:01:07.044] Server  WARN    Error: Route "/api/tasks/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:11.208] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:01:11.291] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:01:21.839] Server  WARN    Error: Route "/api/roles/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:21.844] Server  LOG     prisma:query "SELECT 1"
+[00:02:11.803] Server  WARN    Error: Route "/api/roles/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:02:11.813] Server  LOG     prisma:query "SELECT 1"
+[00:04:51.590] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:53.820] Server  LOG     prisma:query "SELECT 1"
+[00:04:53.821] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:04:53.902] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:04:58.690] Server  WARN    Error: Route "/api/roles/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:06:49.899] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:02.221] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:07:02.280] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:07:13.320] Server  LOG     prisma:query "BEGIN"
+[00:07:13.323] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE (`todolist`.`roles`.`RoleID` = ? AND 1=1) LIMIT ? OFFSET ?"
+[00:07:13.376] Server  LOG     prisma:query "DELETE FROM `todolist`.`roles` WHERE (`todolist`.`roles`.`RoleID` = ? AND 1=1)"
+[00:07:13.388] Server  LOG     prisma:query "COMMIT"
+[00:07:13.471] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:07:21.757] Server  LOG     prisma:query "SELECT 1"
+[00:07:21.759] Server  LOG     prisma:query "BEGIN"
+[00:07:21.760] Server  LOG     prisma:query "INSERT INTO `todolist`.`roles` (`RoleID`,`RoleName`) VALUES (?,?)"
+[00:07:21.763] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` = ? LIMIT ? OFFSET ?"
+[00:07:21.773] Server  LOG     prisma:query "COMMIT"
+[00:07:21.835] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:07:31.363] Server  WARN    Error: Route "/api/roles/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:09:33.498] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:40.337] Server  LOG     prisma:query "SELECT 1"
+[00:09:40.339] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:09:40.340] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:09:40.341] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:09:40.365] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:09:40.435] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:09:40.437] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:09:40.439] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:09:40.456] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:09:41.881] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:09:41.953] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:09:47.629] Server  LOG     prisma:query "BEGIN"
+[00:09:47.632] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE (`todolist`.`roles`.`RoleID` = ? AND 1=1)"
+[00:09:47.641] Server  LOG     prisma:query "UPDATE `todolist`.`roles` SET `RoleName` = ? WHERE (`todolist`.`roles`.`RoleID` IN (?) AND (`todolist`.`roles`.`RoleID` = ? AND 1=1))"
+[00:09:47.644] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` = ? LIMIT ? OFFSET ?"
+[00:09:47.652] Server  LOG     prisma:query "COMMIT"
+[00:09:47.679] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:09:55.537] Server  LOG     prisma:query "SELECT 1"
+[00:09:55.540] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:09:55.542] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:09:55.544] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:09:55.546] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:09:55.547] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:09:55.548] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:09:55.549] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:09:55.550] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:09:55.655] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:09:55.657] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:09:55.660] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:09:55.662] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:09:55.666] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:09:55.704] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:09:55.706] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:09:55.706] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:11:05.438] Server  WARN    Error: Route "/api/tasks/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:11:05.458] Server  LOG     prisma:query "SELECT 1"
+[00:13:16.755] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:18.713] Server  LOG     prisma:query "SELECT 1"
+[00:13:18.716] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:13:18.718] Server  LOG     prisma:query "SELECT 1"
+[00:13:18.727] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:13:18.730] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:13:18.744] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:13:18.750] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:13:18.787] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:13:18.788] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:13:18.792] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:13:18.928] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:13:18.931] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:13:18.933] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:13:18.935] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:13:18.937] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:13:18.939] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:13:18.941] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:13:18.943] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:13:24.683] Server  LOG     prisma:query "BEGIN"
+[00:13:24.687] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE (`todolist`.`tasks`.`TaskID` = ? AND 1=1)"
+[00:13:24.714] Server  LOG     prisma:query "UPDATE `todolist`.`tasks` SET `Title` = ?, `Description` = ?, `Status` = ?, `Priority` = ?, `AssignedTo` = ?, `DueDate` = ? WHERE (`todolist`.`tasks`.`TaskID` IN (?) AND (`todolist`.`tasks`.`TaskID` = ? AND 1=1))"
+[00:13:24.719] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE `todolist`.`tasks`.`TaskID` = ? LIMIT ? OFFSET ?"
+[00:13:24.727] Server  LOG     prisma:query "COMMIT"
+[00:13:24.808] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:13:24.809] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:13:24.810] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:13:47.635] Server  LOG     prisma:query "SELECT 1"
+[00:13:47.637] Server  LOG     prisma:query "BEGIN"
+[00:13:47.689] Server  LOG     prisma:query "INSERT INTO `todolist`.`tasks` (`TaskID`,`ListID`,`AssignedTo`,`Title`,`Description`,`Priority`,`Status`,`DueDate`,`CreatedAt`) VALUES (?,?,?,?,?,?,?,?,?)"
+[00:13:47.693] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE `todolist`.`tasks`.`TaskID` = ? LIMIT ? OFFSET ?"
+[00:13:47.706] Server  LOG     prisma:query "COMMIT"
+[00:13:47.776] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:13:47.780] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?,?)"
+[00:13:47.783] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:13:55.962] Server  LOG     prisma:query "BEGIN"
+[00:13:55.968] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE (`todolist`.`tasks`.`TaskID` = ? AND 1=1) LIMIT ? OFFSET ?"
+[00:13:56.129] Server  LOG     prisma:query "DELETE FROM `todolist`.`tasks` WHERE (`todolist`.`tasks`.`TaskID` = ? AND 1=1)"
+[00:13:56.142] Server  LOG     prisma:query "COMMIT"
+[00:13:56.311] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:13:56.312] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?)"
+[00:13:56.313] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?)"
+[00:13:58.332] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:13:58.334] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:13:58.405] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:13:58.409] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:13:58.467] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:13:58.469] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:13:58.522] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:13:58.525] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:14:39.493] Server  LOG     prisma:query "SELECT 1"
+[00:14:39.497] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:14:39.500] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:14:39.502] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:14:39.505] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:14:39.508] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:14:39.640] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:14:39.641] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:14:39.645] Server  LOG     prisma:query "SELECT 1"
+[00:14:39.647] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:14:39.648] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:14:39.650] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:14:40.291] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:14:40.295] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:14:40.298] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:14:40.301] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:14:40.531] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:14:40.533] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:14:40.533] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:14:40.535] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:14:58.781] Server  LOG     prisma:query "SELECT 1"
+[00:14:58.783] Server  LOG     prisma:query "BEGIN"
+[00:14:58.787] Server  LOG     prisma:query "INSERT INTO `todolist`.`tasklists` (`ListID`,`ProjectID`,`ListName`) VALUES (?,?,?)"
+[00:14:58.789] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` = ? LIMIT ? OFFSET ?"
+[00:14:58.800] Server  LOG     prisma:query "COMMIT"
+[00:14:58.856] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:14:58.859] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:15:04.444] Server  LOG     prisma:query "BEGIN"
+[00:15:04.445] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE (`todolist`.`tasklists`.`ListID` = ? AND 1=1)"
+[00:15:04.447] Server  LOG     prisma:query "UPDATE `todolist`.`tasklists` SET `ListName` = ?, `ProjectID` = ? WHERE (`todolist`.`tasklists`.`ListID` IN (?) AND (`todolist`.`tasklists`.`ListID` = ? AND 1=1))"
+[00:15:04.448] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` = ? LIMIT ? OFFSET ?"
+[00:15:04.456] Server  LOG     prisma:query "COMMIT"
+[00:15:04.490] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:15:04.492] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?,?)"
+[00:15:08.257] Server  LOG     prisma:query "BEGIN"
+[00:15:08.263] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE (`todolist`.`tasklists`.`ListID` = ? AND 1=1) LIMIT ? OFFSET ?"
+[00:15:08.267] Server  LOG     prisma:query "DELETE FROM `todolist`.`tasklists` WHERE (`todolist`.`tasklists`.`ListID` = ? AND 1=1)"
+[00:15:08.280] Server  LOG     prisma:query "COMMIT"
+[00:15:08.374] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:15:08.378] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:15:11.591] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:15:11.594] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:15:11.596] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:15:11.612] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:15:11.614] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:15:11.726] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:15:11.729] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:15:11.731] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:15:11.735] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:15:11.737] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:16:26.632] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:28.223] Server  LOG     prisma:query "SELECT 1"
+[00:16:28.226] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:16:28.228] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:16:28.230] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:16:28.232] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:16:28.234] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:16:28.302] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:16:28.303] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?)"
+[00:16:28.304] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:16:28.305] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:16:28.306] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:17:04.281] Server  LOG     prisma:query "SELECT 1"
+[00:17:04.282] Server  LOG     prisma:query "BEGIN"
+[00:17:04.287] Server  LOG     prisma:query "INSERT INTO `todolist`.`projects` (`ProjectID`,`ProjectName`,`Description`,`CreatedBy`,`CreatedAt`) VALUES (?,?,?,?,?)"
+[00:17:04.290] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` = ? LIMIT ? OFFSET ?"
+[00:17:04.301] Server  LOG     prisma:query "COMMIT"
+[00:17:04.357] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:17:04.360] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:17:17.121] Server  LOG     prisma:query "BEGIN"
+[00:17:17.125] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE (`todolist`.`projects`.`ProjectID` = ? AND 1=1)"
+[00:17:17.128] Server  LOG     prisma:query "UPDATE `todolist`.`projects` SET `ProjectName` = ?, `Description` = ? WHERE (`todolist`.`projects`.`ProjectID` IN (?) AND (`todolist`.`projects`.`ProjectID` = ? AND 1=1))"
+[00:17:17.131] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` = ? LIMIT ? OFFSET ?"
+[00:17:17.133] Server  LOG     prisma:query "COMMIT"
+[00:17:17.221] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:17:17.223] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:17:28.665] Server  LOG     prisma:query "SELECT 1"
+[00:17:28.667] Server  LOG     prisma:query "BEGIN"
+[00:17:28.669] Server  LOG     prisma:query "INSERT INTO `todolist`.`projects` (`ProjectID`,`ProjectName`,`Description`,`CreatedBy`,`CreatedAt`) VALUES (?,?,?,?,?)"
+[00:17:28.671] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` = ? LIMIT ? OFFSET ?"
+[00:17:28.682] Server  LOG     prisma:query "COMMIT"
+[00:17:28.740] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:17:28.743] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?,?)"
+[00:17:32.963] Server  LOG     prisma:query "BEGIN"
+[00:17:32.966] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE (`todolist`.`projects`.`ProjectID` = ? AND 1=1) LIMIT ? OFFSET ?"
+[00:17:32.968] Server  LOG     prisma:query "DELETE FROM `todolist`.`projects` WHERE (`todolist`.`projects`.`ProjectID` = ? AND 1=1)"
+[00:17:32.981] Server  LOG     prisma:query "COMMIT"
+[00:17:33.049] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:17:33.053] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:17:34.582] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:17:34.589] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:17:34.591] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:17:34.593] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:17:34.637] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:17:35.423] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:17:35.425] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:17:35.427] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:18:54.205] Server  LOG     prisma:query "SELECT 1"
+[00:18:54.206] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:18:54.207] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:18:54.208] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:18:54.234] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:18:54.235] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:18:54.236] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:18:54.242] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:18:54.243] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:18:54.279] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:18:54.280] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:18:55.129] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:18:55.131] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:18:55.132] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:18:55.134] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:18:55.288] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:18:55.293] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:18:55.296] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?)"
+[00:18:55.298] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:19:30.617] Server  LOG     prisma:query "SELECT 1"
+[00:19:30.622] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE (`todolist`.`users`.`Email` = ? OR `todolist`.`users`.`UserName` = ?) LIMIT ? OFFSET ?"
+[00:19:30.628] Server  LOG     prisma:query "BEGIN"
+[00:19:30.634] Server  LOG     prisma:query "INSERT INTO `todolist`.`users` (`UserID`,`UserName`,`Email`,`PasswordHash`,`CreatedAt`) VALUES (?,?,?,?,?)"
+[00:19:30.637] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` = ? LIMIT ? OFFSET ?"
+[00:19:30.650] Server  LOG     prisma:query "COMMIT"
+[00:19:30.660] Server  LOG     prisma:query "BEGIN"
+[00:19:30.662] Server  LOG     prisma:query "INSERT INTO `todolist`.`userroles` (`UserRoleID`,`UserID`,`RoleID`) VALUES (?,?,?)"
+[00:19:30.666] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`UserID`, `todolist`.`userroles`.`RoleID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserRoleID` = ? LIMIT ? OFFSET ?"
+[00:19:30.676] Server  LOG     prisma:query "COMMIT"
+[00:19:30.738] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:19:30.741] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:19:30.743] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:19:40.490] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE (`todolist`.`users`.`UserID` = ? AND 1=1) LIMIT ? OFFSET ?"
+[00:19:40.495] Server  LOG     prisma:query "BEGIN"
+[00:19:40.496] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE (`todolist`.`users`.`UserID` = ? AND 1=1)"
+[00:19:40.497] Server  LOG     prisma:query "UPDATE `todolist`.`users` SET `UserName` = ?, `Email` = ? WHERE (`todolist`.`users`.`UserID` IN (?) AND (`todolist`.`users`.`UserID` = ? AND 1=1))"
+[00:19:40.498] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`PasswordHash`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` = ? LIMIT ? OFFSET ?"
+[00:19:40.498] Server  LOG     prisma:query "COMMIT"
+[00:19:40.514] Server  LOG     prisma:query "DELETE FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` = ?"
+[00:19:40.516] Server  LOG     prisma:query "BEGIN"
+[00:19:40.517] Server  LOG     prisma:query "INSERT INTO `todolist`.`userroles` (`UserRoleID`,`UserID`,`RoleID`) VALUES (?,?,?)"
+[00:19:40.517] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`UserID`, `todolist`.`userroles`.`RoleID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserRoleID` = ? LIMIT ? OFFSET ?"
+[00:19:40.527] Server  LOG     prisma:query "COMMIT"
+[00:19:40.557] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:19:40.559] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:19:40.561] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:01.327] Server  LOG     ✓ Compiled in 2.1s
+[00:22:02.013] Server  LOG     prisma:query "SELECT 1"
+[00:22:02.014] Server  LOG     prisma:query "BEGIN"
+[00:22:02.014] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:22:02.015] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:22:02.015] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:22:02.016] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:22:02.017] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:22:02.017] Server  LOG     prisma:query "COMMIT"
+[00:22:29.272] Server  LOG     prisma:query "SELECT 1"
+[00:22:29.274] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:29.276] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:29.277] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:29.279] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:22:29.378] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:29.380] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:29.383] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:29.404] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:22:30.099] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:22:30.102] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:22:30.104] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:30.107] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:30.109] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:30.227] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:22:30.229] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:22:30.231] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:30.236] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:30.238] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:30.870] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:22:30.873] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:22:30.875] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:22:30.878] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:22:30.972] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:22:30.975] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:22:30.977] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:22:30.979] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:22:31.601] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:22:31.602] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?)"
+[00:22:31.604] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?)"
+[00:22:31.606] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:22:31.608] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:22:31.610] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:31.612] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:31.614] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:31.859] Server  LOG     prisma:query "SELECT `todolist`.`tasks`.`TaskID`, `todolist`.`tasks`.`ListID`, `todolist`.`tasks`.`AssignedTo`, `todolist`.`tasks`.`Title`, `todolist`.`tasks`.`Description`, `todolist`.`tasks`.`Priority`, `todolist`.`tasks`.`Status`, `todolist`.`tasks`.`DueDate`, `todolist`.`tasks`.`CreatedAt` FROM `todolist`.`tasks` WHERE 1=1 ORDER BY `todolist`.`tasks`.`CreatedAt` DESC"
+[00:22:31.861] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE `todolist`.`tasklists`.`ListID` IN (?,?,?)"
+[00:22:31.862] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?)"
+[00:22:31.877] Server  LOG     prisma:query "SELECT `todolist`.`tasklists`.`ListID`, `todolist`.`tasklists`.`ProjectID`, `todolist`.`tasklists`.`ListName` FROM `todolist`.`tasklists` WHERE 1=1"
+[00:22:31.878] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE `todolist`.`projects`.`ProjectID` IN (?,?)"
+[00:22:31.899] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:22:31.900] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:22:31.902] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:22:32.322] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:22:32.376] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:22:34.057] Server  LOG     prisma:query "BEGIN"
+[00:22:34.058] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:22:34.059] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:22:34.061] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:22:34.063] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:22:34.065] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:22:34.070] Server  LOG     prisma:query "COMMIT"
+[00:25:41.304] Server  LOG     ✓ Compiled in 6s
+[00:25:42.149] Server  LOG     prisma:query "SELECT 1"
+[00:25:42.150] Server  LOG     prisma:query "BEGIN"
+[00:25:42.151] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:25:42.151] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:25:42.152] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:25:42.153] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:25:42.154] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:25:42.163] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status`"
+[00:25:42.165] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority`"
+[00:25:42.166] Server  LOG     prisma:query "COMMIT"
+[00:25:43.032] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:25:43.032] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:25:43.032] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:25:43.032] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:26:58.558] Server  LOG     prisma:query "SELECT 1"
+[00:26:58.559] Server  LOG     prisma:query "BEGIN"
+[00:26:58.559] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:26:58.560] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:26:58.561] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:26:58.562] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:26:58.562] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:26:58.563] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status` ORDER BY COUNT(`todolist`.`tasks`.`Status`) DESC"
+[00:26:58.565] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority` ORDER BY COUNT(`todolist`.`tasks`.`Priority`) DESC"
+[00:26:58.566] Server  LOG     prisma:query "COMMIT"
+[00:26:58.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:26:58.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:26:58.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:26:58.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:26:59.417] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:26:59.435] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:26:59.439] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:26:59.444] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:26:59.568] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:26:59.571] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:26:59.573] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:26:59.575] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:27:00.645] Server  LOG     prisma:query "BEGIN"
+[00:27:00.648] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:27:00.650] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:27:00.653] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:27:00.655] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:27:00.657] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:27:00.661] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status` ORDER BY COUNT(`todolist`.`tasks`.`Status`) DESC"
+[00:27:00.664] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority` ORDER BY COUNT(`todolist`.`tasks`.`Priority`) DESC"
+[00:27:00.666] Server  LOG     prisma:query "COMMIT"
+[00:27:00.835] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:00.835] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:00.836] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:00.836] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:01.779] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:27:01.783] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:27:01.786] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:27:01.806] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:27:01.898] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:27:01.899] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:27:01.901] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:27:01.903] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:27:03.208] Server  LOG     prisma:query "BEGIN"
+[00:27:03.212] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:27:03.215] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:27:03.218] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:27:03.220] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:27:03.223] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:27:03.227] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status` ORDER BY COUNT(`todolist`.`tasks`.`Status`) DESC"
+[00:27:03.230] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority` ORDER BY COUNT(`todolist`.`tasks`.`Priority`) DESC"
+[00:27:03.232] Server  LOG     prisma:query "COMMIT"
+[00:27:03.429] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:03.429] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:03.429] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:03.429] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:28.589] Server  WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:28.594] Server  WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:28.942] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:27:29.072] Server  LOG     prisma:query "SELECT 1"
+[00:27:29.072] Server  LOG     prisma:query "BEGIN"
+[00:27:29.073] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:27:29.074] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:27:29.074] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:27:29.075] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:27:29.076] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:27:29.077] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status` ORDER BY COUNT(`todolist`.`tasks`.`Status`) DESC"
+[00:27:29.077] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority` ORDER BY COUNT(`todolist`.`tasks`.`Priority`) DESC"
+[00:27:29.078] Server  LOG     prisma:query "COMMIT"
+[00:27:29.197] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:29.197] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:29.197] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:27:29.197] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:28:25.360] Server  LOG     prisma:query "SELECT 1"
+[00:28:25.361] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:28:25.362] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:28:25.363] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:28:25.371] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:28:25.408] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE 1=1"
+[00:28:25.412] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:28:25.413] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:28:25.415] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:28:26.666] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:28:26.670] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:28:26.673] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:28:26.675] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:28:26.677] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:28:26.863] Server  LOG     prisma:query "SELECT `todolist`.`projects`.`ProjectID`, `todolist`.`projects`.`ProjectName`, `todolist`.`projects`.`Description`, `todolist`.`projects`.`CreatedBy`, `todolist`.`projects`.`CreatedAt` FROM `todolist`.`projects` WHERE 1=1 ORDER BY `todolist`.`projects`.`CreatedAt` DESC"
+[00:28:26.865] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email`, `todolist`.`users`.`CreatedAt` FROM `todolist`.`users` WHERE 1=1 ORDER BY `todolist`.`users`.`CreatedAt` DESC"
+[00:28:26.868] Server  LOG     prisma:query "SELECT `todolist`.`userroles`.`UserRoleID`, `todolist`.`userroles`.`RoleID`, `todolist`.`userroles`.`UserID` FROM `todolist`.`userroles` WHERE `todolist`.`userroles`.`UserID` IN (?,?,?,?,?,?,?)"
+[00:28:26.871] Server  LOG     prisma:query "SELECT `todolist`.`users`.`UserID`, `todolist`.`users`.`UserName`, `todolist`.`users`.`Email` FROM `todolist`.`users` WHERE `todolist`.`users`.`UserID` IN (?,?,?,?)"
+[00:28:26.873] Server  LOG     prisma:query "SELECT `todolist`.`roles`.`RoleID`, `todolist`.`roles`.`RoleName` FROM `todolist`.`roles` WHERE `todolist`.`roles`.`RoleID` IN (?,?,?)"
+[00:28:27.823] Server  LOG     prisma:query "BEGIN"
+[00:28:27.824] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`users`.`UserID` FROM `todolist`.`users` WHERE 1=1) AS `sub`"
+[00:28:27.826] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`projects`.`ProjectID` FROM `todolist`.`projects` WHERE 1=1) AS `sub`"
+[00:28:27.830] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasklists`.`ListID` FROM `todolist`.`tasklists` WHERE 1=1) AS `sub`"
+[00:28:27.835] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`tasks`.`TaskID` FROM `todolist`.`tasks` WHERE 1=1) AS `sub`"
+[00:28:27.837] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT `todolist`.`roles`.`RoleID` FROM `todolist`.`roles` WHERE 1=1) AS `sub`"
+[00:28:27.842] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Status`), `todolist`.`tasks`.`Status` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Status` ORDER BY COUNT(`todolist`.`tasks`.`Status`) DESC"
+[00:28:27.845] Server  LOG     prisma:query "SELECT COUNT(`todolist`.`tasks`.`Priority`), `todolist`.`tasks`.`Priority` FROM `todolist`.`tasks` WHERE 1=1 GROUP BY `todolist`.`tasks`.`Priority` ORDER BY COUNT(`todolist`.`tasks`.`Priority`) DESC"
+[00:28:27.847] Server  LOG     prisma:query "COMMIT"
+[00:28:28.115] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:28:28.115] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:28:28.115] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:28:28.115] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.

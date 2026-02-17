@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { cookies } from 'next/headers';
+
+async function checkAdmin() {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
 
 export async function GET(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get('projectId');
 
@@ -28,6 +39,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
         const { ProjectID, ListName } = body;

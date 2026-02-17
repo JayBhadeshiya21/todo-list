@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 export function TaskListsView() {
   const [lists, setLists] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingList, setEditingList] = useState<any>(null);
@@ -23,13 +24,24 @@ export function TaskListsView() {
     }
   };
 
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch('/api/projects');
+      const data = await res.json();
+      setProjects(data);
+    } catch (error) {
+      console.error('Failed to fetch projects:', error);
+    }
+  };
+
   useEffect(() => {
-    fetchLists(); // Note: Current API implementation for getAll might need adjustment if it expects projectId query
+    fetchLists();
+    fetchProjects();
   }, []);
 
   const handleCreate = () => {
     setEditingList(null);
-    setFormData({ ListName: '', ProjectID: '1' });
+    setFormData({ ListName: '', ProjectID: projects.length > 0 ? (projects[0] as any).ProjectID.toString() : '' });
     setIsModalOpen(true);
   };
 
@@ -37,7 +49,7 @@ export function TaskListsView() {
     setEditingList(list);
     setFormData({ 
         ListName: list.ListName, 
-        ProjectID: list.ProjectID
+        ProjectID: list.ProjectID ? list.ProjectID.toString() : ''
     });
     setIsModalOpen(true);
   };
@@ -114,13 +126,19 @@ export function TaskListsView() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Project ID</label>
-            <input 
-              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700" 
-              type="number"
-              value={formData.ProjectID}
-              onChange={(e) => setFormData({...formData, ProjectID: e.target.value})}
-            />
+            <label className="block text-sm font-medium mb-1">Project</label>
+            <select
+                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                value={formData.ProjectID}
+                onChange={(e) => setFormData({...formData, ProjectID: e.target.value})}
+            >
+                <option value="">Select Project</option>
+                {projects.map((project: any) => (
+                    <option key={project.ProjectID} value={project.ProjectID}>
+                        {project.ProjectName}
+                    </option>
+                ))}
+            </select>
           </div>
         </div>
       </Modal>

@@ -71,22 +71,28 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/db.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/headers.js [app-route] (ecmascript)");
 ;
 ;
+;
+async function checkAdmin() {
+    const cookieStore = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["cookies"])();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
 async function GET(request, { params }) {
+    if (!await checkAdmin()) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: 'Unauthorized'
+        }, {
+            status: 401
+        });
+    }
     try {
-        const { id } = await params;
-        const roleId = parseInt(id);
-        if (isNaN(roleId)) {
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
-            }, {
-                status: 400
-            });
-        }
+        const id = parseInt(params.id);
         const role = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].roles.findUnique({
             where: {
-                RoleID: roleId
+                RoleID: id
             }
         });
         if (!role) {
@@ -98,7 +104,6 @@ async function GET(request, { params }) {
         }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(role);
     } catch (error) {
-        console.error('Error fetching role:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Failed to fetch role'
         }, {
@@ -107,17 +112,24 @@ async function GET(request, { params }) {
     }
 }
 async function PUT(request, { params }) {
+    if (!await checkAdmin()) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: "Unauthorized"
+        }, {
+            status: 401
+        });
+    }
     try {
-        const { id } = await params;
+        const { id } = await params; // ✅ MUST await
         const roleId = parseInt(id);
-        const body = await request.json();
         if (isNaN(roleId)) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
+                error: "Invalid ID"
             }, {
                 status: 400
             });
         }
+        const body = await request.json();
         const { RoleName } = body;
         const updatedRole = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].roles.update({
             where: {
@@ -129,21 +141,28 @@ async function PUT(request, { params }) {
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(updatedRole);
     } catch (error) {
-        console.error('Error updating role:', error);
+        console.error(error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Failed to update role'
+            error: "Failed to update role"
         }, {
             status: 500
         });
     }
 }
 async function DELETE(request, { params }) {
+    const { id } = await params; // ✅ MUST await
+    if (!await checkAdmin()) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: "Unauthorized"
+        }, {
+            status: 401
+        });
+    }
     try {
-        const { id } = await params;
         const roleId = parseInt(id);
         if (isNaN(roleId)) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Invalid ID'
+                error: "Invalid ID"
             }, {
                 status: 400
             });
@@ -154,12 +173,11 @@ async function DELETE(request, { params }) {
             }
         });
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            message: 'Role deleted successfully'
+            message: "Role deleted successfully"
         });
     } catch (error) {
-        console.error('Error deleting role:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Failed to delete role'
+            error: "Failed to delete role"
         }, {
             status: 500
         });

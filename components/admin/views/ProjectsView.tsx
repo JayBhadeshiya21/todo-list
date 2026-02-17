@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 export function ProjectsView() {
   const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<any>(null);
@@ -23,13 +24,24 @@ export function ProjectsView() {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch('/api/users');
+      const data = await res.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+    }
+  };
+
   useEffect(() => {
     fetchProjects();
+    fetchUsers();
   }, []);
 
   const handleCreate = () => {
     setEditingProject(null);
-    setFormData({ ProjectName: '', Description: '', CreatedBy: '1' }); // Default to user 1 for now
+    setFormData({ ProjectName: '', Description: '', CreatedBy: users.length > 0 ? (users[0] as any).UserID.toString() : '' });
     setIsModalOpen(true);
   };
 
@@ -38,7 +50,7 @@ export function ProjectsView() {
     setFormData({ 
         ProjectName: project.ProjectName, 
         Description: project.Description || '',
-        CreatedBy: project.CreatedBy
+        CreatedBy: project.CreatedBy ? project.CreatedBy.toString() : ''
     });
     setIsModalOpen(true);
   };
@@ -124,13 +136,19 @@ export function ProjectsView() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Creator ID (User ID)</label>
-            <input 
-              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700" 
-              type="number"
-              value={formData.CreatedBy}
-              onChange={(e) => setFormData({...formData, CreatedBy: e.target.value})}
-            />
+            <label className="block text-sm font-medium mb-1">Created By</label>
+            <select
+                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                value={formData.CreatedBy}
+                onChange={(e) => setFormData({...formData, CreatedBy: e.target.value})}
+            >
+                <option value="">Select User</option>
+                {users.map((user: any) => (
+                    <option key={user.UserID} value={user.UserID}>
+                        {user.UserName} ({user.Email})
+                    </option>
+                ))}
+            </select>
           </div>
         </div>
       </Modal>

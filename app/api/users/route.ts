@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { cookies } from 'next/headers';
+
+async function checkAdmin() {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
 
 export async function GET() {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const users = await prisma.users.findMany({
             select: {
@@ -44,9 +55,13 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
-        const { UserName, Email, PasswordHash } = body;
+        const { UserName, Email, PasswordHash, RoleID } = body;
 
         if (!UserName || !Email || !PasswordHash) {
             return NextResponse.json(
@@ -78,6 +93,15 @@ export async function POST(request: Request) {
                 PasswordHash, // hash in real apps
             },
         });
+
+        if (RoleID) {
+            await prisma.userroles.create({
+                data: {
+                    UserID: newUser.UserID,
+                    RoleID: parseInt(RoleID)
+                }
+            });
+        }
 
         // Never return password
         const { PasswordHash: _, ...safeUser } = newUser;

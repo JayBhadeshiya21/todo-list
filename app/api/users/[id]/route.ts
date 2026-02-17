@@ -1,14 +1,32 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { cookies } from 'next/headers';
 
+async function checkAdmin() {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
+
+/* ================= GET ================= */
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
+    if (!(await checkAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
-        const id = parseInt(params.id);
+        const { id } = await context.params;   // ✅ MUST await
+        const userId = parseInt(id);
+
+        if (isNaN(userId)) {
+            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+        }
+
         const user = await prisma.users.findUnique({
-            where: { UserID: id },
+            where: { UserID: userId },
         });
 
         if (!user) {
@@ -20,7 +38,9 @@ export async function GET(
 
         const { PasswordHash, ...safeUser } = user;
         return NextResponse.json(safeUser);
+
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: 'Failed to fetch user' },
             { status: 500 }
@@ -28,18 +48,28 @@ export async function GET(
     }
 }
 
+/* ================= PUT ================= */
 export async function PUT(
     request: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
+    if (!(await checkAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
-        const id = parseInt(params.id);
+        const { id } = await context.params;   // ✅ MUST await
+        const userId = parseInt(id);
+
+        if (isNaN(userId)) {
+            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+        }
+
         const body = await request.json();
         const { UserName, Email, RoleID } = body;
 
-        // Verify user exists first
         const userExists = await prisma.users.findUnique({
-            where: { UserID: id }
+            where: { UserID: userId }
         });
 
         if (!userExists) {
@@ -47,22 +77,15 @@ export async function PUT(
         }
 
         const updatedUser = await prisma.users.update({
-            where: { UserID: id },
-            data: {
-                UserName,
-                Email,
-                // If RoleID is provided, we might need to update userroles table.
-                // For simplicity in this CRUD, assuming basic user updates.
-                // Complex role management might need a separate transaction.
-            },
+            where: { UserID: userId },
+            data: { UserName, Email },
         });
 
-        // Update role if provided (Simplified: clear old roles, add new one)
         if (RoleID) {
-            await prisma.userroles.deleteMany({ where: { UserID: id } });
+            await prisma.userroles.deleteMany({ where: { UserID: userId } });
             await prisma.userroles.create({
                 data: {
-                    UserID: id,
+                    UserID: userId,
                     RoleID: parseInt(RoleID)
                 }
             });
@@ -70,7 +93,9 @@ export async function PUT(
 
         const { PasswordHash, ...safeUser } = updatedUser;
         return NextResponse.json(safeUser);
+
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: 'Failed to update user' },
             { status: 500 }
@@ -78,18 +103,31 @@ export async function PUT(
     }
 }
 
+/* ================= DELETE ================= */
 export async function DELETE(
     request: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
+    if (!(await checkAdmin())) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
-        const id = parseInt(params.id);
+        const { id } = await context.params;   // ✅ MUST await
+        const userId = parseInt(id);
+
+        if (isNaN(userId)) {
+            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+        }
+
         await prisma.users.delete({
-            where: { UserID: id },
+            where: { UserID: userId },
         });
 
         return NextResponse.json({ message: 'User deleted successfully' });
+
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: 'Failed to delete user' },
             { status: 500 }

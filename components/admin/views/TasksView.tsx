@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 
 export function TasksView() {
   const [tasks, setTasks] = useState([]);
+  const [taskLists, setTaskLists] = useState([]);
+  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<any>(null);
@@ -25,13 +27,42 @@ export function TasksView() {
     }
   };
 
+  const fetchTaskLists = async () => {
+    try {
+      const res = await fetch('/api/tasklists');
+      const data = await res.json();
+      setTaskLists(data);
+    } catch (error) {
+      console.error('Failed to fetch task lists:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch('/api/users');
+      const data = await res.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
+    fetchTaskLists();
+    fetchUsers();
   }, []);
 
   const handleCreate = () => {
     setEditingTask(null);
-    setFormData({ Title: '', Description: '', Status: 'Pending', Priority: 'Medium', ListID: '1', AssignedTo: '' });
+    setFormData({ 
+        Title: '', 
+        Description: '', 
+        Status: 'Pending', 
+        Priority: 'Medium', 
+        ListID: taskLists.length > 0 ? (taskLists[0] as any).ListID.toString() : '', 
+        AssignedTo: '' 
+    });
     setIsModalOpen(true);
   };
 
@@ -42,8 +73,8 @@ export function TasksView() {
         Description: task.Description || '',
         Status: task.Status || 'Pending',
         Priority: task.Priority || 'Medium',
-        ListID: task.ListID,
-        AssignedTo: task.AssignedTo || ''
+        ListID: task.ListID ? task.ListID.toString() : '',
+        AssignedTo: task.AssignedTo ? task.AssignedTo.toString() : ''
     });
     setIsModalOpen(true);
   };
@@ -155,22 +186,34 @@ export function TasksView() {
              </div>
           </div>
            <div>
-            <label className="block text-sm font-medium mb-1">List ID</label>
-            <input 
-              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700" 
-              type="number"
-              value={formData.ListID}
-              onChange={(e) => setFormData({...formData, ListID: e.target.value})}
-            />
+            <label className="block text-sm font-medium mb-1">Task List</label>
+            <select
+                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                value={formData.ListID}
+                onChange={(e) => setFormData({...formData, ListID: e.target.value})}
+            >
+                <option value="">Select Task List</option>
+                {taskLists.map((list: any) => (
+                    <option key={list.ListID} value={list.ListID}>
+                        {list.ListName} (Project: {list.projects?.ProjectName})
+                    </option>
+                ))}
+            </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Assigned User ID</label>
-            <input 
-              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700" 
-              type="number"
-              value={formData.AssignedTo}
-              onChange={(e) => setFormData({...formData, AssignedTo: e.target.value})}
-            />
+            <label className="block text-sm font-medium mb-1">Assigned To</label>
+            <select
+                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                value={formData.AssignedTo}
+                onChange={(e) => setFormData({...formData, AssignedTo: e.target.value})}
+            >
+                <option value="">Unassigned</option>
+                {users.map((user: any) => (
+                    <option key={user.UserID} value={user.UserID}>
+                        {user.UserName}
+                    </option>
+                ))}
+            </select>
           </div>
         </div>
       </Modal>

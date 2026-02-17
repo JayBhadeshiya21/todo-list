@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { cookies } from 'next/headers';
+
+async function checkAdmin() {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get('adminId');
+    return !!adminId;
+}
 
 export async function GET(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
@@ -36,6 +47,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+    if (!await checkAdmin()) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
         const body = await request.json();
         const { ProjectName, Description, CreatedBy } = body;
@@ -43,6 +58,7 @@ export async function POST(request: Request) {
         if (!ProjectName || !CreatedBy) {
             return NextResponse.json(
                 { error: 'ProjectName and CreatedBy are required' },
+                { status: 400 }
             );
         }
 
