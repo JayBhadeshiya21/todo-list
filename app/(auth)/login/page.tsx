@@ -40,7 +40,12 @@ export default function LoginPage() {
 
     toast.success("Login successful");
   
-    router.push("/admin/dashboard");
+    // Role-based redirection
+    if (data.user.Role === 'Admin') {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/dashboard");
+    }
   };
 
   return (

@@ -4,19 +4,30 @@ import { Modal } from '../Modal';
 import { toast } from 'sonner';
 
 export function TaskListsView() {
-  const [lists, setLists] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const [lists, setLists] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingList, setEditingList] = useState<any>(null);
   const [formData, setFormData] = useState({ ListName: '', ProjectID: '' });
 
+  const fetchAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Failed to fetch auth:', error);
+    }
+  };
+
   const fetchLists = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/tasklists'); // Might need to fetch all or paginate
+      const res = await fetch('/api/tasklists');
       const data = await res.json();
-      setLists(data);
+      if (Array.isArray(data)) setLists(data);
     } catch (error) {
       toast.error('Failed to fetch task lists');
     } finally {
@@ -28,16 +39,20 @@ export function TaskListsView() {
     try {
       const res = await fetch('/api/projects');
       const data = await res.json();
-      setProjects(data);
+      if (Array.isArray(data)) setProjects(data);
     } catch (error) {
       console.error('Failed to fetch projects:', error);
     }
   };
 
   useEffect(() => {
+    fetchAuth();
     fetchLists();
     fetchProjects();
   }, []);
+
+  const isAdmin = currentUser?.role === 'Admin';
+  const isPM = currentUser?.role === 'Project Manager';
 
   const handleCreate = () => {
     setEditingList(null);
@@ -62,7 +77,8 @@ export function TaskListsView() {
         toast.success('List deleted');
         fetchLists();
       } else {
-        toast.error('Failed to delete list');
+        const error = await res.json();
+        toast.error(error.error || 'Failed to delete list');
       }
     } catch (error) {
       toast.error('Error deleting list');
@@ -105,9 +121,12 @@ export function TaskListsView() {
         title="Task Lists Management" 
         columns={columns} 
         data={lists} 
-        onEdit={handleEdit} 
-        onDelete={handleDelete}
-        onCreate={handleCreate}
+        onEdit={isAdmin || isPM ? handleEdit : undefined} 
+        onDelete={isAdmin || isPM ? handleDelete : undefined}
+        onCreate={isAdmin || isPM ? handleCreate : undefined}
+        canEdit={(list) => isAdmin || (isPM && list.projects?.CreatedBy === currentUser?.userId)}
+        canDelete={(list) => isAdmin || (isPM && list.projects?.CreatedBy === currentUser?.userId)}
+        isLoading={isLoading}
       />
 
       <Modal

@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
-
-async function checkAdmin() {
-    const cookieStore = await cookies();
-    const adminId = cookieStore.get('adminId');
-    return !!adminId;
-}
+import { getCurrentUser, normalizeRole } from '@/lib/auth';
 
 export async function GET(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -17,25 +12,47 @@ export async function GET(request: Request) {
     const listId = searchParams.get('listId');
     const projectId = searchParams.get('projectId');
 
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+    const isUserTM = normalizedRole === 'Team Member';
+
     try {
         let whereClause: any = {};
+
         if (listId) {
             whereClause.ListID = parseInt(listId);
         }
-        // If filtering by project, we might need to join or assume the client knows the lists.
-        // Simplifying: if project ID is passed, we might need nested relation filtering if we want all tasks for a project.
-        // tasks -> tasklists -> projects
+
         if (projectId) {
             whereClause.tasklists = {
                 ProjectID: parseInt(projectId)
-            }
+            };
+        }
+
+        // Access Control
+        if (isUserPM) {
+            // PM can only see tasks from their own projects
+            whereClause.tasklists = {
+                ...(whereClause.tasklists || {}),
+                projects: {
+                    CreatedBy: user.UserID
+                }
+            };
+        } else if (isUserTM) {
+            // TM can only see tasks assigned to them
+            whereClause.AssignedTo = user.UserID;
         }
 
         const tasks = await prisma.tasks.findMany({
             where: whereClause,
             include: {
-                tasklists: true, // Include list info if needed
-                users: { // Include assigned user info
+                tasklists: {
+                    include: {
+                        projects: true
+                    }
+                },
+                users: { // Assigned user info
                     select: {
                         UserName: true,
                         Email: true,
@@ -58,8 +75,18 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+
+    // Only Admin and PM can create tasks
+    if (!isUserAdmin && !isUserPM) {
+        return NextResponse.json({ error: 'Forbidden: Task creation restricted to Admin and Project Managers' }, { status: 403 });
     }
 
     try {
@@ -73,9 +100,19 @@ export async function POST(request: Request) {
             );
         }
 
+        // If PM, allow them to create tasks in any list
+        if (isUserPM) {
+            // (Previously restricted to project ownership check)
+        }
+
+        // Final Title requirement check (Title is already checked in ListID check above)
+        if (!Title) {
+            return NextResponse.json({ error: 'Title is required' }, { status: 400 });
+        }
+
         const newTask = await prisma.tasks.create({
             data: {
-                ListID: parseInt(ListID), // Ensure it's an int
+                ListID: parseInt(ListID),
                 AssignedTo: AssignedTo ? parseInt(AssignedTo) : null,
                 Title,
                 Description,

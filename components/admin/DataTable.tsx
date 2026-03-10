@@ -12,13 +12,15 @@ interface DataTableProps {
   columns: Column[];
   data: any[];
   onEdit?: (item: any) => void;
-  onDelete: (item: any) => void;
+  onDelete?: (item: any) => void;
+  canEdit?: (item: any) => boolean;
+  canDelete?: (item: any) => boolean;
   title: string;
   onCreate?: () => void;
   isLoading?: boolean;
 }
 
-export function DataTable({ columns, data, onEdit, onDelete, title, onCreate, isLoading }: DataTableProps) {
+export function DataTable({ columns, data, onEdit, onDelete, canEdit, canDelete, title, onCreate, isLoading }: DataTableProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-800">
@@ -63,7 +65,7 @@ export function DataTable({ columns, data, onEdit, onDelete, title, onCreate, is
                       </td>
                     ))}
                     <td className="px-6 py-4 text-right space-x-2">
-                      {onEdit && (
+                      {onEdit && (!canEdit || canEdit(item)) && (
                         <button 
                           onClick={() => onEdit(item)}
                           className="text-zinc-400 hover:text-blue-600 transition-colors"
@@ -72,13 +74,15 @@ export function DataTable({ columns, data, onEdit, onDelete, title, onCreate, is
                           <Pencil size={18} />
                         </button>
                       )}
-                      <button 
-                        onClick={() => onDelete(item)}
-                        className="text-zinc-400 hover:text-red-600 transition-colors"
-                        title="Delete"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                      {onDelete && (!canDelete || canDelete(item)) && (
+                        <button 
+                          onClick={() => onDelete(item)}
+                          className="text-zinc-400 hover:text-red-600 transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))

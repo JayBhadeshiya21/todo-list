@@ -1,20 +1,23 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
-
-async function checkAdmin() {
-    const cookieStore = await cookies();
-    const adminId = cookieStore.get('adminId');
-    return !!adminId;
-}
+import { getCurrentUser, normalizeRole } from '@/lib/auth';
 
 export async function GET(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get('projectId');
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+
+    if (!isUserAdmin && !isUserPM) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
 
     try {
         let whereClause: any = {};
@@ -22,10 +25,15 @@ export async function GET(request: Request) {
             whereClause.ProjectID = parseInt(projectId);
         }
 
+        // If PM, allow them to see all tasklists to manage tasks
+        if (isUserPM) {
+            // (Previously restricted to whereClause.projects = { CreatedBy: user.UserID })
+        }
+
         const lists = await prisma.tasklists.findMany({
             where: whereClause,
             include: {
-                projects: true // Include project info
+                projects: true
             }
         });
         return NextResponse.json(lists);
@@ -39,8 +47,17 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+
+    if (!isUserAdmin && !isUserPM) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     try {
@@ -52,6 +69,11 @@ export async function POST(request: Request) {
                 { error: 'ProjectID and ListName are required' },
                 { status: 400 }
             );
+        }
+
+        // If PM, allow them to create tasklists in any project
+        if (isUserPM) {
+            // (Previously restricted to project ownership check)
         }
 
         const newList = await prisma.tasklists.create({

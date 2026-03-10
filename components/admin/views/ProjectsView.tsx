@@ -4,19 +4,30 @@ import { Modal } from '../Modal';
 import { toast } from 'sonner';
 
 export function ProjectsView() {
-  const [projects, setProjects] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<any>(null);
   const [formData, setFormData] = useState({ ProjectName: '', Description: '', CreatedBy: '' });
+
+  const fetchAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Failed to fetch auth:', error);
+    }
+  };
 
   const fetchProjects = async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/projects');
       const data = await res.json();
-      setProjects(data);
+      if (Array.isArray(data)) setProjects(data);
     } catch (error) {
       toast.error('Failed to fetch projects');
     } finally {
@@ -28,20 +39,25 @@ export function ProjectsView() {
     try {
       const res = await fetch('/api/users');
       const data = await res.json();
-      setUsers(data);
+      if (Array.isArray(data)) setUsers(data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
     }
   };
 
   useEffect(() => {
+    fetchAuth();
     fetchProjects();
     fetchUsers();
   }, []);
 
+  const isAdmin = currentUser?.role === 'Admin';
+  const isPM = currentUser?.role === 'Project Manager';
+  const isTM = currentUser?.role === 'Team Member';
+
   const handleCreate = () => {
     setEditingProject(null);
-    setFormData({ ProjectName: '', Description: '', CreatedBy: users.length > 0 ? (users[0] as any).UserID.toString() : '' });
+    setFormData({ ProjectName: '', Description: '', CreatedBy: isAdmin ? (users.length > 0 ? users[0].UserID.toString() : '') : currentUser?.userId.toString() });
     setIsModalOpen(true);
   };
 
@@ -63,7 +79,8 @@ export function ProjectsView() {
         toast.success('Project deleted');
         fetchProjects();
       } else {
-        toast.error('Failed to delete project');
+        const error = await res.json();
+        toast.error(error.error || 'Failed to delete project');
       }
     } catch (error) {
       toast.error('Error deleting project');
@@ -107,9 +124,10 @@ export function ProjectsView() {
         title="Projects Management" 
         columns={columns} 
         data={projects} 
-        onEdit={handleEdit} 
-        onDelete={handleDelete}
-        onCreate={handleCreate}
+        onEdit={isAdmin || isPM ? handleEdit : undefined} 
+        onDelete={isAdmin ? handleDelete : undefined}
+        onCreate={isAdmin || isPM ? handleCreate : undefined}
+        isLoading={isLoading}
       />
 
       <Modal
@@ -135,21 +153,23 @@ export function ProjectsView() {
               onChange={(e) => setFormData({...formData, Description: e.target.value})}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Created By</label>
-            <select
-                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
-                value={formData.CreatedBy}
-                onChange={(e) => setFormData({...formData, CreatedBy: e.target.value})}
-            >
-                <option value="">Select User</option>
-                {users.map((user: any) => (
-                    <option key={user.UserID} value={user.UserID}>
-                        {user.UserName} ({user.Email})
-                    </option>
-                ))}
-            </select>
-          </div>
+          {isAdmin && (
+            <div>
+              <label className="block text-sm font-medium mb-1">Created By</label>
+              <select
+                  className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                  value={formData.CreatedBy}
+                  onChange={(e) => setFormData({...formData, CreatedBy: e.target.value})}
+              >
+                  <option value="">Select User</option>
+                  {users.map((user: any) => (
+                      <option key={user.UserID} value={user.UserID}>
+                          {user.UserName} ({user.Email})
+                      </option>
+                  ))}
+              </select>
+            </div>
+          )}
         </div>
       </Modal>
     </>

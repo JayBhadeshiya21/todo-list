@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
-
-async function checkAdmin() {
-    const cookieStore = await cookies();
-    const adminId = cookieStore.get('adminId');
-    return !!adminId;
-}
+import { getCurrentUser, normalizeRole } from '@/lib/auth';
 
 export async function GET() {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+
+    if (!isUserAdmin && !isUserPM) {
+        return NextResponse.json({ error: 'Forbidden: Admin or Project Manager only' }, { status: 403 });
     }
 
     try {
@@ -55,8 +58,14 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    if (normalizedRole !== 'Admin') {
+        return NextResponse.json({ error: 'Unauthorized: Admin only' }, { status: 403 });
     }
 
     try {

@@ -93,21 +93,40 @@ async function POST(req) {
                 status: 401
             });
         }
-        const isAdmin = user.userroles.some((ur)=>ur.roles && ur.roles.RoleName.toUpperCase() === "ADMIN");
-        if (!isAdmin) {
+        const { normalizeRole } = await __turbopack_context__.A("[project]/lib/auth.ts [app-route] (ecmascript, async loader)");
+        const userRole = user.userroles[0]?.roles?.RoleName || "";
+        const normalizedRole = normalizeRole(userRole);
+        const isAdmin = normalizedRole === "Admin";
+        if (!normalizedRole) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: "Access denied: Admin only"
+                error: "Access denied: No role assigned"
             }, {
                 status: 403
             });
         }
         const res = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            message: "Login successful"
+            message: "Login successful",
+            user: {
+                UserID: user.UserID,
+                UserName: user.UserName,
+                Role: normalizedRole
+            }
         });
-        res.cookies.set("adminId", user.UserID.toString(), {
+        res.cookies.set("userId", user.UserID.toString(), {
             httpOnly: true,
             path: "/"
         });
+        res.cookies.set("userRole", normalizedRole, {
+            httpOnly: true,
+            path: "/"
+        });
+        // Maintain backward compatibility for adminId if needed
+        if (isAdmin) {
+            res.cookies.set("adminId", user.UserID.toString(), {
+                httpOnly: true,
+                path: "/"
+            });
+        }
         return res;
     } catch (err) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({

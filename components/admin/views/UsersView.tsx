@@ -6,17 +6,32 @@ import { toast } from 'sonner';
 export function UsersView() {
   const [users, setUsers] = useState<any[]>([]);
   const [roles, setRoles] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<any>(null);
   const [formData, setFormData] = useState({ UserName: '', Email: '', PasswordHash: '', RoleID: '' });
 
+  const fetchAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Failed to fetch auth:', error);
+    }
+  };
+
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/users');
+      if (res.status === 403) {
+          setUsers([]);
+          return;
+      }
       const data = await res.json();
-      setUsers(data);
+      if (Array.isArray(data)) setUsers(data);
     } catch (error) {
       toast.error('Failed to fetch users');
     } finally {
@@ -28,16 +43,33 @@ export function UsersView() {
     try {
       const res = await fetch('/api/roles');
       const data = await res.json();
-      setRoles(data);
+      if (Array.isArray(data)) setRoles(data);
     } catch (error) {
       console.error('Failed to fetch roles:', error);
     }
   };
 
   useEffect(() => {
+    fetchAuth();
     fetchUsers();
     fetchRoles();
   }, []);
+
+  const isAdmin = currentUser?.role === 'Admin';
+
+  if (currentUser && !isAdmin) {
+      return (
+          <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center">
+                  <span className="text-2xl font-bold">!</span>
+              </div>
+              <div>
+                  <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Access Denied</h2>
+                  <p className="text-zinc-500 max-w-sm mx-auto">You do not have permission to manage users. This area is restricted to system administrators.</p>
+              </div>
+          </div>
+      );
+  }
 
   const handleCreate = () => {
     setEditingUser(null);
@@ -47,12 +79,6 @@ export function UsersView() {
 
   const handleEdit = (user: any) => {
     setEditingUser(user);
-    // Note: Roles is an array of strings in current API response.
-    // Ideally user object should have RoleID or we map back.
-    // For now, simpler to just allow updating basic info or re-selecting a role.
-    // If strict role binding needed, we need to find the ID corresponding to role name.
-    
-    // Attempt to find RoleID from RoleName if possible, or just default to empty/first
     let roleId = '';
     if (user.Roles && user.Roles.length > 0 && roles.length > 0) {
         const userRoleName = user.Roles[0];
@@ -63,7 +89,7 @@ export function UsersView() {
     setFormData({ 
         UserName: user.UserName, 
         Email: user.Email, 
-        PasswordHash: '', // Keep empty to not update
+        PasswordHash: '', 
         RoleID: roleId
     });
     setIsModalOpen(true);
@@ -71,17 +97,14 @@ export function UsersView() {
 
   const handleDelete = async (user: any) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
-
     try {
-      const res = await fetch(`/api/users/${user.UserID}`, {
-        method: 'DELETE',
-      });
-
+      const res = await fetch(`/api/users/${user.UserID}`, { method: 'DELETE' });
       if (res.ok) {
         toast.success('User deleted');
         fetchUsers();
       } else {
-        toast.error('Failed to delete user');
+        const error = await res.json();
+        toast.error(error.error || 'Failed to delete user');
       }
     } catch (error) {
       toast.error('Error deleting user');
@@ -100,7 +123,7 @@ export function UsersView() {
       };
 
       if (!editingUser) {
-          payload.PasswordHash = formData.PasswordHash || 'password123'; // Default password if creating
+          payload.PasswordHash = formData.PasswordHash || 'password123';
       }
 
       const res = await fetch(url, {
@@ -126,20 +149,8 @@ export function UsersView() {
     { key: 'UserID', header: 'ID' },
     { key: 'UserName', header: 'Username' },
     { key: 'Email', header: 'Email' },
-    {
-      key: 'Roles',
-      header: 'Roles',
-      render: (u: any) =>
-        u.Roles && u.Roles.length > 0
-          ? u.Roles.join(', ')
-          : '—',
-    },
-    {
-      key: 'CreatedAt',
-      header: 'Created At',
-      render: (u: any) =>
-        new Date(u.CreatedAt).toLocaleDateString(),
-    },
+    { key: 'Roles', header: 'Roles', render: (u: any) => u.Roles && u.Roles.length > 0 ? u.Roles.join(', ') : '—' },
+    { key: 'CreatedAt', header: 'Created At', render: (u: any) => new Date(u.CreatedAt).toLocaleDateString() },
   ];
 
   return (

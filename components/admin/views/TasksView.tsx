@@ -4,9 +4,10 @@ import { Modal } from '../Modal';
 import { toast } from 'sonner';
 
 export function TasksView() {
-  const [tasks, setTasks] = useState([]);
-  const [taskLists, setTaskLists] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [taskLists, setTaskLists] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<any>(null);
@@ -14,12 +15,22 @@ export function TasksView() {
       Title: '', Description: '', Status: 'Pending', Priority: 'Medium', ListID: '', AssignedTo: '' 
   });
 
+  const fetchAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      setCurrentUser(data);
+    } catch (error) {
+      console.error('Failed to fetch auth:', error);
+    }
+  };
+
   const fetchTasks = async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/tasks');
       const data = await res.json();
-      setTasks(data);
+      if (Array.isArray(data)) setTasks(data);
     } catch (error) {
       toast.error('Failed to fetch tasks');
     } finally {
@@ -31,7 +42,7 @@ export function TasksView() {
     try {
       const res = await fetch('/api/tasklists');
       const data = await res.json();
-      setTaskLists(data);
+      if (Array.isArray(data)) setTaskLists(data);
     } catch (error) {
       console.error('Failed to fetch task lists:', error);
     }
@@ -41,17 +52,22 @@ export function TasksView() {
     try {
       const res = await fetch('/api/users');
       const data = await res.json();
-      setUsers(data);
+      if (Array.isArray(data)) setUsers(data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
     }
   };
 
   useEffect(() => {
+    fetchAuth();
     fetchTasks();
     fetchTaskLists();
     fetchUsers();
   }, []);
+
+  const isAdmin = currentUser?.role === 'Admin';
+  const isPM = currentUser?.role === 'Project Manager';
+  const isTM = currentUser?.role === 'Team Member';
 
   const handleCreate = () => {
     setEditingTask(null);
@@ -87,7 +103,8 @@ export function TasksView() {
         toast.success('Task deleted');
         fetchTasks();
       } else {
-        toast.error('Failed to delete task');
+        const error = await res.json();
+        toast.error(error.error || 'Failed to delete task');
       }
     } catch (error) {
       toast.error('Error deleting task');
@@ -140,8 +157,11 @@ export function TasksView() {
         columns={columns} 
         data={tasks} 
         onEdit={handleEdit} 
-        onDelete={handleDelete}
-        onCreate={handleCreate}
+        onDelete={isAdmin || isPM ? handleDelete : undefined}
+        onCreate={isAdmin || isPM ? handleCreate : undefined}
+        canEdit={(task) => isAdmin || isPM || (isTM && task.AssignedTo === currentUser?.userId)}
+        canDelete={(task) => isAdmin || (isPM && task.tasklists?.projects?.CreatedBy === currentUser?.userId)}
+        isLoading={isLoading}
       />
 
       <Modal
@@ -154,8 +174,9 @@ export function TasksView() {
           <div>
             <label className="block text-sm font-medium mb-1">Title</label>
             <input 
-              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700" 
+              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 disabled:opacity-50" 
               value={formData.Title}
+              disabled={isTM}
               onChange={(e) => setFormData({...formData, Title: e.target.value})}
             />
           </div>
@@ -170,18 +191,21 @@ export function TasksView() {
                     <option value="Pending">Pending</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
                 </select>
              </div>
              <div>
                 <label className="block text-sm font-medium mb-1">Priority</label>
                 <select 
-                    className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                    className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 disabled:opacity-50"
                     value={formData.Priority}
+                    disabled={isTM}
                     onChange={(e) => setFormData({...formData, Priority: e.target.value})}
                 >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
                 </select>
              </div>
           </div>
@@ -203,8 +227,9 @@ export function TasksView() {
           <div>
             <label className="block text-sm font-medium mb-1">Assigned To</label>
             <select
-                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700"
+                className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 disabled:opacity-50"
                 value={formData.AssignedTo}
+                disabled={isTM}
                 onChange={(e) => setFormData({...formData, AssignedTo: e.target.value})}
             >
                 <option value="">Unassigned</option>
@@ -214,6 +239,15 @@ export function TasksView() {
                     </option>
                 ))}
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Description</label>
+            <textarea 
+              className="w-full p-2 border rounded-md dark:bg-zinc-800 dark:border-zinc-700 disabled:opacity-50" 
+              value={formData.Description}
+              disabled={isTM}
+              onChange={(e) => setFormData({...formData, Description: e.target.value})}
+            />
           </div>
         </div>
       </Modal>

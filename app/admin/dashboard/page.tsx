@@ -40,37 +40,67 @@ export default function AdminDashboard() {
   }, [activeTab]);
 
   const StatCard = ({ title, count, icon: Icon, color }: any) => (
-    <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+    <div className="bg-white dark:bg-zinc-900/50 p-6 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800/50 backdrop-blur-md flex items-center justify-between group hover:border-blue-500/30 transition-all duration-300">
         <div>
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{title}</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500">{title}</p>
             <h3 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mt-2">{loading ? '...' : count}</h3>
         </div>
-        <div className={`p-4 rounded-full ${color}`}>
-            <Icon size={24} className="text-white" />
+        <div className={`p-3.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300`}>
+            <Icon size={20} />
         </div>
     </div>
   );
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 
   return (
-    <div className="flex h-screen bg-zinc-100 dark:bg-zinc-950">
+    <div className="flex h-screen bg-zinc-50 dark:bg-zinc-950">
       <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} isSidebarOpen={isSidebarOpen} />
       
       <main className="flex-1 overflow-y-auto w-full">
-         <div className="p-6">
+         <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-zinc-200 bg-white/70 backdrop-blur-xl px-8 lg:px-12 dark:border-zinc-800 dark:bg-zinc-900/70">
+            <div className="flex items-center gap-2 md:hidden">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center">
+                    <span className="font-bold tracking-tight">A</span>
+                </div>
+                <span className="font-bold tracking-tight">AdminPanel</span>
+            </div>
+            
+            <div className="flex items-center gap-4 ml-auto">
+                <div className="text-right hidden sm:block">
+                    <p className="text-sm font-bold text-zinc-900 dark:text-zinc-100 leading-none">Administrator</p>
+                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider mt-1">Super Admin</p>
+                </div>
+                <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 p-[1px]">
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-white dark:bg-zinc-900">
+                        <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-tr from-blue-500 to-indigo-600">AD</span>
+                    </div>
+                </div>
+            </div>
+         </header>
+
+         <div className="p-8 lg:p-12">
             <div className="flex items-center justify-between mb-8">
-                 <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 capitalize">{activeTab}</h1>
+                 <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 capitalize">{activeTab}</h1>
             </div>
 
             {activeTab === 'dashboard' && (
-                <div className="space-y-6">
-                    <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg text-white mb-8">
-                        <h2 className="text-2xl font-bold mb-2">Welcome Back, Admin</h2>
-                        <p className="opacity-90">Here's what's happening in your workspace today.</p>
+                <div className="space-y-8">
+                    <div className="relative overflow-hidden p-10 bg-zinc-900 rounded-3xl border border-white/5 shadow-2xl">
+                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]" />
+                        <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]" />
+                        
+                        <div className="relative z-10 space-y-4">
+                            <h2 className="text-4xl font-bold text-white leading-tight">
+                                Welcome Back, Admin
+                            </h2>
+                            <p className="text-zinc-400 max-w-xl text-lg">
+                                Here's a complete overview of your workspace today. You're managing {stats.users} users across {stats.projects} active projects.
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         <StatCard title="Total Users" count={stats.users} icon={Users} color="bg-blue-500" />
                         <StatCard title="Active Projects" count={stats.projects} icon={FolderKanban} color="bg-purple-500" />
                         <StatCard title="Task Lists" count={stats.taskLists} icon={ListTodo} color="bg-orange-500" />

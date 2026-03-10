@@ -1,24 +1,19 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
-
-async function checkAdmin() {
-    const cookieStore = await cookies();
-    const adminId = cookieStore.get('adminId');
-    return !!adminId;
-}
+import { getCurrentUser, normalizeRole } from '@/lib/auth';
 
 /* ================= GET ================= */
 export async function GET(
     request: Request,
     context: { params: Promise<{ id: string }> }
 ) {
-    if (!(await checkAdmin())) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     try {
-        const { id } = await context.params;   // ✅ MUST await
+        const { id } = await context.params;
         const projectId = parseInt(id);
 
         if (isNaN(projectId)) {
@@ -27,11 +22,33 @@ export async function GET(
 
         const project = await prisma.projects.findUnique({
             where: { ProjectID: projectId },
-            include: { users: { select: { UserName: true } } }
+            include: { users: { select: { UserName: true, UserID: true } } }
         });
 
         if (!project) {
             return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+        }
+
+        const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+        const isUserAdmin = normalizedRole === 'Admin';
+        const isUserPM = normalizedRole === 'Project Manager';
+        const isUserTM = normalizedRole === 'Team Member';
+
+        if (isUserPM && project.CreatedBy !== user.UserID) {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+        }
+
+        if (isUserTM) {
+            // TM can only view if they have a task in it
+            const hasTask = await prisma.tasks.findFirst({
+                where: {
+                    AssignedTo: user.UserID,
+                    tasklists: { ProjectID: projectId }
+                }
+            });
+            if (!hasTask) {
+                return NextResponse.json({ error: 'Forbidden: You are not assigned to this project' }, { status: 403 });
+            }
         }
 
         return NextResponse.json(project);
@@ -47,16 +64,33 @@ export async function PUT(
     request: Request,
     context: { params: Promise<{ id: string }> }
 ) {
-    if (!(await checkAdmin())) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     try {
-        const { id } = await context.params;   // ✅ MUST await
+        const { id } = await context.params;
         const projectId = parseInt(id);
 
         if (isNaN(projectId)) {
             return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+        }
+
+        const project = await prisma.projects.findUnique({
+            where: { ProjectID: projectId }
+        });
+
+        if (!project) {
+            return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+        }
+
+        const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+        const isUserAdmin = normalizedRole === 'Admin';
+        const isUserPM = normalizedRole === 'Project Manager';
+
+        if (!isUserAdmin && !(isUserPM && project.CreatedBy === user.UserID)) {
+            return NextResponse.json({ error: 'Forbidden: Edit restricted to Admin or Project Creator' }, { status: 403 });
         }
 
         const body = await request.json();
@@ -80,12 +114,18 @@ export async function DELETE(
     request: Request,
     context: { params: Promise<{ id: string }> }
 ) {
-    if (!(await checkAdmin())) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    if (normalizedRole !== 'Admin') {
+        return NextResponse.json({ error: 'Forbidden: Delete restricted to Admin only' }, { status: 403 });
+    }
+
     try {
-        const { id } = await context.params;   // ✅ MUST await
+        const { id } = await context.params;
         const projectId = parseInt(id);
 
         if (isNaN(projectId)) {

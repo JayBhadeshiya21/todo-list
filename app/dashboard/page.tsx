@@ -1,90 +1,101 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import { FolderKanban, CheckSquare, Users, AlertCircle, Clock, ArrowUpRight } from "lucide-react";
-
-// --- Mock Data (Based on Schema) ---
-
-const users = [
-  { userID: 1, userName: "Alice", role: "Admin" },
-  { userID: 2, userName: "Bob", role: "User" },
-  { userID: 3, userName: "Charlie", role: "User" },
-  { userID: 4, userName: "Diana", role: "Manager" },
-  { userID: 5, userName: "Evan", role: "User" },
-];
-
-const projects = [
-  { projectID: 1, projectName: "Website Redesign", status: "Active" },
-  { projectID: 2, projectName: "Mobile App", status: "Active" },
-  { projectID: 3, projectName: "Internal Tools", status: "On Hold" },
-  { projectID: 4, projectName: "Marketing Campaign", status: "Completed" },
-];
-
-const tasks = [
-  { taskID: 1, title: "Design Home Page", status: "Completed", priority: "High" },
-  { taskID: 2, title: "Implement Login", status: "In Progress", priority: "High" },
-  { taskID: 3, title: "Setup Database", status: "Completed", priority: "Medium" },
-  { taskID: 4, title: "Create API Endpoints", status: "In Progress", priority: "High" },
-  { taskID: 5, title: "Write Documentation", status: "Pending", priority: "Low" },
-  { taskID: 6, title: "Fix Navigation Bug", status: "Pending", priority: "Medium" },
-  { taskID: 7, title: "Deploy to Staging", status: "Pending", priority: "High" },
-];
-
-const taskHistory = [
-  { historyID: 1, taskTitle: "Design Home Page", changeType: "Status Changed", changedBy: "Alice", time: "2 hours ago" },
-  { historyID: 2, taskTitle: "Implement Login", changeType: "Assigned", changedBy: "Diana", time: "4 hours ago" },
-  { historyID: 3, taskTitle: "Write Documentation", changeType: "Created", changedBy: "Bob", time: "1 day ago" },
-  { historyID: 4, taskTitle: "Setup Database", changeType: "Completed", changedBy: "Evan", time: "1 day ago" },
-];
-
-// --- Data Processing for Charts ---
-
-const statusData = [
-  { name: "Pending", value: tasks.filter(t => t.status === "Pending").length, color: "#f59e0b" },
-  { name: "In Progress", value: tasks.filter(t => t.status === "In Progress").length, color: "#3b82f6" },
-  { name: "Completed", value: tasks.filter(t => t.status === "Completed").length, color: "#10b981" },
-];
-
-const priorityData = [
-  { name: "Low", value: tasks.filter(t => t.priority === "Low").length, color: "#10b981" },
-  { name: "Medium", value: tasks.filter(t => t.priority === "Medium").length, color: "#f59e0b" },
-  { name: "High", value: tasks.filter(t => t.priority === "High").length, color: "#ef4444" },
-];
+import { FolderKanban, CheckSquare, Users, AlertCircle, Clock, ArrowUpRight, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function DashboardPage() {
+  const [stats, setStats] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/dashboard/stats');
+        if (!res.ok) throw new Error('Failed to fetch stats');
+        const data = await res.json();
+        setStats(data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load dashboard statistics");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-[80vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+      </div>
+    );
+  }
+
+  if (!stats) return null;
+
+  const statusColors: any = {
+    "Pending": "#f59e0b",
+    "In Progress": "#3b82f6",
+    "Completed": "#10b981",
+    "On Hold": "#ef4444",
+    "Cancelled": "#71717A"
+  };
+
+  const priorityColors: any = {
+    "Low": "#10b981",
+    "Medium": "#f59e0b",
+    "High": "#ef4444",
+    "Urgent": "#7f1d1d"
+  };
+
+  const statusData = stats.charts.status.map((s: any) => ({
+    ...s,
+    color: statusColors[s.name] || "#3b82f6"
+  }));
+
+  const priorityData = stats.charts.priority.map((p: any) => ({
+    ...p,
+    color: priorityColors[p.name] || "#3b82f6"
+  }));
+
   return (
     <div className="space-y-6">
-      
-      {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">Dashboard</h1>
-           <p className="text-zinc-500 dark:text-zinc-400 mt-1">Overview of project progress and team activity.</p>
-        </div>
-        <div className="flex gap-2">
-            <button className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-                Export Report
-            </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm">
-                + New Project
-            </button>
+           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+             {stats.role ? `${stats.role} Dashboard` : 'Dashboard'}
+           </h1>
+           <p className="text-zinc-500 dark:text-zinc-400 mt-1">Real-time overview of your projects and tasks.</p>
         </div>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="relative overflow-hidden p-8 bg-zinc-900 rounded-2xl border border-white/5 shadow-2xl">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl" />
+        
+        <div className="relative z-10 space-y-2">
+            <h2 className="text-2xl font-bold text-white leading-tight">
+                Welcome back, {stats.role || 'User'}
+            </h2>
+            <p className="text-zinc-400 max-w-lg">
+                Your workspace is updated with the latest activity. You have {stats.tasks} tasks active across {stats.projects} projects.
+            </p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="hover:shadow-md transition-shadow duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-zinc-500">Total Projects</CardTitle>
             <FolderKanban className="h-4 w-4 text-zinc-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{projects.length}</div>
-            <p className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
-               <span className="text-green-600 flex items-center font-medium"><ArrowUpRight size={12}/> +2</span> from last month
-            </p>
+            <div className="text-2xl font-bold">{stats.projects}</div>
+            <p className="text-xs text-zinc-500 mt-1">Managed or assigned projects</p>
           </CardContent>
         </Card>
 
@@ -94,48 +105,28 @@ export default function DashboardPage() {
             <CheckSquare className="h-4 w-4 text-zinc-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{tasks.filter(t => t.status !== "Completed").length}</div>
-            <p className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
-              <span className="text-blue-600 font-medium">{tasks.filter(t => t.status === "In Progress").length}</span> in progress
-            </p>
+            <div className="text-2xl font-bold">{stats.tasks}</div>
+            <p className="text-xs text-zinc-500 mt-1">Assigned to you or your projects</p>
           </CardContent>
         </Card>
 
-        
-
         <Card className="hover:shadow-md transition-shadow duration-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-zinc-500">Team Members</CardTitle>
+            <CardTitle className="text-sm font-medium text-zinc-500">Team Active</CardTitle>
             <Users className="h-4 w-4 text-zinc-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{users.length}</div>
-            <p className="text-xs text-zinc-500 mt-1">Active contributors</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="hover:shadow-md transition-shadow duration-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-             <CardTitle className="text-sm font-medium text-zinc-500">Pending High Priority</CardTitle>
-             <AlertCircle className="h-4 w-4 text-red-500" />
-          </CardHeader>
-          <CardContent>
-             <div className="text-2xl font-bold text-red-600">
-                {tasks.filter(t => t.priority === "High" && t.status !== "Completed").length}
-             </div>
-             <p className="text-xs text-zinc-500 mt-1">Requires immediate attention</p>
+            <div className="text-2xl font-bold">{stats.team}</div>
+            <p className="text-xs text-zinc-500 mt-1">Collaborators</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Main Grid: Charts & Activity */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        
-        {/* Task Status Chart */}
         <Card className="col-span-4 hover:shadow-md transition-shadow duration-200">
           <CardHeader>
             <CardTitle>Task Status Distribution</CardTitle>
-            <CardDescription>Overview of task completion status across all projects</CardDescription>
+            <CardDescription>Visual breakdown of tasks by their current status</CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
             <div className="h-[300px] w-full">
@@ -149,7 +140,7 @@ export default function DashboardPage() {
                         contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                     />
                     <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={32}>
-                        {statusData.map((entry, index) => (
+                        {statusData.map((entry: any, index: number) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                     </Bar>
@@ -159,11 +150,10 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Priority Pie Chart */}
         <Card className="col-span-3 hover:shadow-md transition-shadow duration-200">
           <CardHeader>
             <CardTitle>Workload by Priority</CardTitle>
-             <CardDescription>Current active tasks breakdown</CardDescription>
+             <CardDescription>Breakdown of task priorities</CardDescription>
           </CardHeader>
           <CardContent>
              <div className="h-[300px] w-full">
@@ -178,7 +168,7 @@ export default function DashboardPage() {
                             paddingAngle={5}
                             dataKey="value"
                         >
-                            {priorityData.map((entry, index) => (
+                            {priorityData.map((entry: any, index: number) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                         </Pie>
@@ -191,31 +181,32 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      {/* Recent Activity Table */}
       <Card className="hover:shadow-md transition-shadow duration-200">
           <CardHeader>
               <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest updates from your team</CardDescription>
+              <CardDescription>Latest updates from your projects</CardDescription>
           </CardHeader>
           <CardContent>
               <div className="space-y-4">
-                  {taskHistory.map((item) => (
-                      <div key={item.historyID} className="flex items-start justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4 last:border-0 last:pb-0">
+                  {stats.activity.length > 0 ? stats.activity.map((item: any) => (
+                      <div key={item.id} className="flex items-start justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4 last:border-0 last:pb-0">
                           <div className="flex items-center gap-4">
                               <div className="h-9 w-9 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center flex-shrink-0">
                                   <Clock size={16} />
                               </div>
                               <div className="space-y-1">
                                   <p className="text-sm font-medium leading-none">
-                                      <span className="font-semibold text-zinc-900 dark:text-zinc-100">{item.changedBy}</span> {item.changeType.toLowerCase()} <span className="text-zinc-700 dark:text-zinc-300">"{item.taskTitle}"</span>
+                                      <span className="font-semibold text-zinc-900 dark:text-zinc-100">{item.user}</span> {item.type.toLowerCase()} <span className="text-zinc-700 dark:text-zinc-300">"{item.taskTitle}"</span>
                                   </p>
                                   <p className="text-xs text-zinc-500">
-                                      {item.time}
+                                      {new Date(item.time).toLocaleString()}
                                   </p>
                               </div>
                           </div>
                       </div>
-                  ))}
+                  )) : (
+                    <p className="text-sm text-zinc-500 py-4 text-center">No recent activity found.</p>
+                  )}
               </div>
           </CardContent>
       </Card>

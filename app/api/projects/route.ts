@@ -1,25 +1,41 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
-
-async function checkAdmin() {
-    const cookieStore = await cookies();
-    const adminId = cookieStore.get('adminId');
-    return !!adminId;
-}
+import { getCurrentUser, normalizeRole } from '@/lib/auth';
 
 export async function GET(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+    const isUserTM = normalizedRole === 'Team Member';
+
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    const requestedUserId = searchParams.get('userId');
 
     try {
         let whereClause: any = {};
-        if (userId) {
-            whereClause.CreatedBy = parseInt(userId);
+
+        if (isUserPM) {
+            // PM can see all projects to manage tasks
+            // (Previously restricted to whereClause.CreatedBy = user.UserID)
+        } else if (isUserTM) {
+            // TM can see projects where they have assigned tasks
+            whereClause.tasklists = {
+                some: {
+                    tasks: {
+                        some: {
+                            AssignedTo: user.UserID
+                        }
+                    }
+                }
+            };
+        } else if (isUserAdmin && requestedUserId) {
+            // Admin can filter by userId if provided
+            whereClause.CreatedBy = parseInt(requestedUserId);
         }
 
         const projects = await prisma.projects.findMany({
@@ -47,17 +63,27 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    if (!await checkAdmin()) {
+    const user = await getCurrentUser();
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const normalizedRole = normalizeRole(user.userroles[0]?.roles?.RoleName);
+    const isUserAdmin = normalizedRole === 'Admin';
+    const isUserPM = normalizedRole === 'Project Manager';
+
+    // Only Admin and PM can create projects
+    if (!isUserAdmin && !isUserPM) {
+        return NextResponse.json({ error: 'Forbidden: Creation restricted to Admin and Project Managers' }, { status: 403 });
     }
 
     try {
         const body = await request.json();
         const { ProjectName, Description, CreatedBy } = body;
 
-        if (!ProjectName || !CreatedBy) {
+        if (!ProjectName) {
             return NextResponse.json(
-                { error: 'ProjectName and CreatedBy are required' },
+                { error: 'ProjectName is required' },
                 { status: 400 }
             );
         }
@@ -66,7 +92,7 @@ export async function POST(request: Request) {
             data: {
                 ProjectName,
                 Description,
-                CreatedBy: parseInt(CreatedBy),
+                CreatedBy: isUserAdmin ? (CreatedBy ? parseInt(CreatedBy) : user.UserID) : user.UserID,
             },
         });
 
