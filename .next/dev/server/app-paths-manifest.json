@@ -1,8 +1,10 @@
 {
   "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/api/admin/stats/route": "app/api/admin/stats/route.js",
   "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
   "/api/dashboard/stats/route": "app/api/dashboard/stats/route.js",
   "/api/login/route": "app/api/login/route.js",
   "/api/logout/route": "app/api/logout/route.js",

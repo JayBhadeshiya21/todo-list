@@ -32,12 +32,25 @@ export async function GET(request: Request) {
 
         // Access Control
         if (isUserPM) {
-            // PM can only see tasks from their own projects
-            whereClause.tasklists = {
-                ...(whereClause.tasklists || {}),
-                projects: {
-                    CreatedBy: user.UserID
-                }
+            // PM can see tasks from their own projects OR tasks assigned to them
+            whereClause = {
+                AND: [
+                    whereClause, // Respect listId and projectId filters if present
+                    {
+                        OR: [
+                            {
+                                tasklists: {
+                                    projects: {
+                                        CreatedBy: user.UserID
+                                    }
+                                }
+                            },
+                            {
+                                AssignedTo: user.UserID
+                            }
+                        ]
+                    }
+                ]
             };
         } else if (isUserTM) {
             // TM can only see tasks assigned to them

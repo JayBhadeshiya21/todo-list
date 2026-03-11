@@ -20,8 +20,8 @@ export async function GET(request: Request) {
         let whereClause: any = {};
 
         if (isUserPM) {
-            // PM can see all projects to manage tasks
-            // (Previously restricted to whereClause.CreatedBy = user.UserID)
+            // Restrict PM to only see projects they created
+            whereClause.CreatedBy = user.UserID;
         } else if (isUserTM) {
             // TM can see projects where they have assigned tasks
             whereClause.tasklists = {

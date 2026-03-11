@@ -19,8 +19,26 @@ export async function GET() {
         let taskFilter: any = {};
 
         if (isPM) {
-            projectFilter = { CreatedBy: user.UserID };
-            taskFilter = { tasklists: { projects: { CreatedBy: user.UserID } } };
+            projectFilter = {
+                OR: [
+                    { CreatedBy: user.UserID },
+                    {
+                        tasklists: {
+                            some: {
+                                tasks: {
+                                    some: { AssignedTo: user.UserID }
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+            taskFilter = {
+                OR: [
+                    { tasklists: { projects: { CreatedBy: user.UserID } } },
+                    { AssignedTo: user.UserID }
+                ]
+            };
         } else if (isTM) {
             projectFilter = {
                 tasklists: {
@@ -50,7 +68,16 @@ export async function GET() {
                 orderBy: { Priority: 'asc' }
             }),
             prisma.taskhistory.findMany({
-                where: isTM ? { tasks: { AssignedTo: user.UserID } } : (isPM ? { tasks: { tasklists: { projects: { CreatedBy: user.UserID } } } } : {}),
+                where: isTM 
+                    ? { tasks: { AssignedTo: user.UserID } } 
+                    : (isPM 
+                        ? { 
+                            OR: [
+                                { tasks: { tasklists: { projects: { CreatedBy: user.UserID } } } },
+                                { tasks: { AssignedTo: user.UserID } }
+                            ]
+                        } 
+                        : {}),
                 include: {
                     tasks: true,
                     users: { select: { UserName: true } }
